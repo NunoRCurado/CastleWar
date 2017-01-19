@@ -18,15 +18,15 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 	}
 
 	else if(comObj.getArg1() == "DIM" && controlo == 0){
-	/*	if ((atoi(comObj.getArg2().c_str()) < 20 || atoi(comObj.getArg3().c_str()) < 80)){
+		if ((atoi(comObj.getArg2().c_str()) < 20 || atoi(comObj.getArg3().c_str()) < 80)){
 			cout << "ERRO! Mapa demasiado pequeno" << endl;
-			return false;*/
-		/*}*/
-		/*else {*/
+			return false;
+		}
+		else {
 			mapa->criarMapa(atoi(comObj.getArg2().c_str()), atoi(comObj.getArg3().c_str()));
 			cout << "mapa feito" << endl;
 			return true;
-		/*}*/
+		}
 	}
 	else if (comObj.getArg1() != "MOEDAS" && controlo == 1) {
 		cout << "ERRO! Insira primeiro o numero de moedas" << endl;
