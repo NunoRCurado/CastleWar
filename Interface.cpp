@@ -18,15 +18,15 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 	}
 
 	else if(comObj.getArg1() == "DIM" && controlo == 0){
-		if ((atoi(comObj.getArg2().c_str()) < 20 || atoi(comObj.getArg3().c_str()) < 80)){
+	/*	if ((atoi(comObj.getArg2().c_str()) < 20 || atoi(comObj.getArg3().c_str()) < 80)){
 			cout << "ERRO! Mapa demasiado pequeno" << endl;
-			return false;
-		}
-		else {
+			return false;*/
+		/*}*/
+		/*else {*/
 			mapa->criarMapa(atoi(comObj.getArg2().c_str()), atoi(comObj.getArg3().c_str()));
 			cout << "mapa feito" << endl;
 			return true;
-		}
+		/*}*/
 	}
 	else if (comObj.getArg1() != "MOEDAS" && controlo == 1) {
 		cout << "ERRO! Insira primeiro o numero de moedas" << endl;
@@ -55,7 +55,7 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 		}
 		else {
 			jogo->setNumeroJogadores(atoi(comObj.getArg2().c_str()));
-			char id = 'a';
+			char id = 'A';
 			for (int i = 0; i < jogo->getNumeroJogadores(); i++) {
 				mapa->setColonias(new Colonia(jogo->getMoedasInicial(), id));
 				cout << "jogador criado " << i << " com o id " << id << endl;
@@ -65,28 +65,28 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 			return true;
 		}
 	}
-	else if (comObj.getArg1() == "CASTELO" && comObj.getArg2() != "A" && controlo == 3) {
-		cout << "So e possivel editar castelo do jogador humano." << endl;
-		return false;
-	}
-	else if (comObj.getArg1() == "CASTELO" && comObj.getArg2() == "A" && controlo==3) {
+
+	else if (comObj.getArg1() == "CASTELO" && controlo==3) {
 		if (atoi(comObj.getArg3().c_str()) > mapa->getNumeroLinha() || atoi(comObj.getArg4().c_str()) > mapa->getNumeroColuna()) {
 			cout << "ERRO! Numero de linha/coluna invalido" << endl;
 			return false;
 		}
 		else {
-			bool flag = mapa->verificaEdificios(atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()), comObj.getArg2());
+			bool flag = mapa->verificaEdificios(atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()), comObj.getArg2(), 10);
 			if (flag == false){
 				return false;
 			}
 			else {
 				int y = mapa->converteCoordenadasemPosicao(atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
-				int x = mapa->getColonias().at(0)->getEdificios().at(0)->getTerreno()->getPosicao();
-				mapa->getTerreno().at(x)->getEdificios()->setTerreno(mapa->getTerreno().at(y));
-				mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios().at(0));
-				mapa->getTerreno().at(x)->setEdificios(NULL);
-				cout << "Castelo mudado com sucesso." << endl;
-				return true;
+				for(int i = 0; i< mapa->getColonias().size();i++)
+					if (mapa->getColonias().at(i)->getId() == comObj.getArg2()[0]) {
+						int x = mapa->getColonias().at(i)->getEdificios().at(0)->getTerreno()->getPosicao();
+						mapa->getTerreno().at(x)->getEdificios()->setTerreno(mapa->getTerreno().at(y));
+						mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios().at(0));
+						mapa->getTerreno().at(x)->setEdificios(NULL);
+						cout << "Castelo "<< comObj.getArg2()<< " mudado com sucesso." << endl;
+						return true;
+					}
 			}
 		}
 	}	

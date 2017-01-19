@@ -22,7 +22,7 @@ private:
 
 
 	 Seres* seres = NULL;
-	 Edificios* edificios;
+	 Edificios* edificios = NULL;
 	 //flag para saber se esta um edificio no terreno para prioridade de desenho
 	 vector <Terreno*> terrenosAdjacentes;
 			 
