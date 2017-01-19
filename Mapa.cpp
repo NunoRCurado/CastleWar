@@ -117,31 +117,35 @@ void Mapa::setColonias(Colonia * colonia)
 
 	if (this->colonias.size() == 0)
 	{
-		int posicao = randomSelector(0, getNumeroColuna() * getNumeroLinha());
+		int posicao = randomSelector(0, (getNumeroColuna() * getNumeroLinha()-1));
 		Castelo *castelo = new Castelo("C", getTerreno().at(posicao));
 		colonia->setEdificios(castelo);
 		this->colonias.push_back(colonia);
+		this->terrenos.at(posicao)->setEdificios(castelo);
 		//inserir random e depois inserir castelo no random
-		getTerreno().at(posicao)->setEdificios(castelo);
 		d.preencheMapa(terrenos, 0);
 	}
 	else {
 		//verificar as 10 casas a volta? 
 	
-		int pos = this->colonias.at(this->colonias.size() - 1)->getEdificios().at(0)->getTerreno()->getPosicao();
-		Castelo *castelo = new Castelo("C", getTerreno().at(pos+20)); //verificar isto pode rebentar
+		int posicao = randomSelector(0, (getNumeroColuna() * getNumeroLinha()-1));
+		while (this->terrenos.at(posicao)->getEdificios() != NULL) {
+			int posicao = randomSelector(0, getNumeroColuna() * getNumeroLinha());
+		}
+		Castelo *castelo = new Castelo("C", getTerreno().at(posicao)); //verificar isto pode rebentar
 		colonia->setEdificios(castelo);
 		this->colonias.push_back(colonia);
+		this->terrenos.at(posicao)->setEdificios(castelo);
 		d.preencheMapa(terrenos, 0);
 	}
 }
 
-bool Mapa::verificaEdificios(int linhas, int colunas, string id)
+bool Mapa::verificaEdificios(int linhas, int colunas, string id, int raio)
 {
-	int Lmin = linhas - 10;
-	int Lmax = linhas + 10;
-	int Cmin = colunas - 10;
-	int Cmax = colunas + 10;
+	int Lmin = linhas - raio;
+	int Lmax = linhas + raio;
+	int Cmin = colunas - raio;
+	int Cmax = colunas + raio;
 
 	int verificaLmin = 0;
 	int verificaCmin = 0;
@@ -168,17 +172,23 @@ bool Mapa::verificaEdificios(int linhas, int colunas, string id)
 
 	int posicaoInicio = converteCoordenadasemPosicao(Lmin, Cmin);
 
-	int colunaCalculo = this->terrenos.at(posicaoInicio)->getColuna() + 20 + verificaCmin - verificaCmax;
-	int linhaCalculo = this->terrenos.at(posicaoInicio)->getLinha() + 20 + verificaLmin - verificaLmax;
+	int colunaCalculo = raio*2 + verificaCmin - verificaCmax -1;
+	int linhaCalculo =  raio*2 + verificaLmin - verificaLmax -1;
 
 	for (int i = 0; i < colunaCalculo; i++) {
 		for (int j = 0; j < linhaCalculo; j++) {
-			if (this->terrenos.at((posicaoInicio +i) + this->numeroColuna*j)->getEdificios() != NULL) {
+			int x = (posicaoInicio + i) + this->numeroColuna*j;
+			if (this->terrenos.at(x)->getEdificios() != NULL) {
 				for (int k = 0; k < this->colonias.size(); k++) {
 					if (this->colonias.at(k)->getId() == id[0]){
-						this->terrenos.at((posicaoInicio + i) + this->numeroColuna*j) != this->colonias.at(k)->getEdificios().at(0)->getTerreno();
-						cout << "Existem edificios na area" << endl;
-						return false;
+						if (this->colonias.at(k)->getEdificios().at(0)->getTerreno() != this->terrenos.at(x)) {
+							cout << "Existem edificios na area" << endl;
+							return false;
+						}
+						else {
+							cout << "Encontrei o castelo" << id << endl;
+						}
+
 					}
 				}
 			}

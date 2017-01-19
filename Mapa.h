@@ -45,7 +45,7 @@ public:
 	void setColonias(Colonia *colonias);
 	vector <Colonia*> getColonias() { return this->colonias; }
 
-	bool verificaEdificios(int linhas, int colunas, string id);
+	bool verificaEdificios(int linhas, int colunas, string id, int raio);
 	int converteCoordenadasemPosicao(int linhas, int colunas);
 	int randomSelector(int valInicial, int valFinal);
 };
