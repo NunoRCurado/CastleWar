@@ -9,6 +9,7 @@ Mapa::~Mapa()
 }
 
 void Mapa::criarMapa(int numeroLinha, int numeroColuna){
+	Desenho d;
 
 	this->numeroLinha = numeroLinha;
 	this->numeroColuna = numeroColuna;
@@ -22,6 +23,7 @@ void Mapa::criarMapa(int numeroLinha, int numeroColuna){
 		}
 
 	}
+	d.preencheMapa(terrenos, 0);
 	for (int i = 0; i < numeroLinha*numeroColuna; i++) {
 		setAdjacentes(this->terrenos.at(i));
 	}
@@ -111,6 +113,8 @@ void Mapa::setAdjacentes(Terreno * terrenoPosicao)
 
 void Mapa::setColonias(Colonia * colonia)
 {
+	Desenho d;
+
 	if (this->colonias.size() == 0)
 	{
 		int posicao = randomSelector(0, getNumeroColuna() * getNumeroLinha());
@@ -119,7 +123,7 @@ void Mapa::setColonias(Colonia * colonia)
 		this->colonias.push_back(colonia);
 		//inserir random e depois inserir castelo no random
 		getTerreno().at(posicao)->setEdificios(castelo);
-		
+		d.preencheMapa(terrenos, 0);
 	}
 	else {
 		//verificar as 10 casas a volta? 
@@ -128,7 +132,7 @@ void Mapa::setColonias(Colonia * colonia)
 		Castelo *castelo = new Castelo("C", getTerreno().at(pos+20)); //verificar isto pode rebentar
 		colonia->setEdificios(castelo);
 		this->colonias.push_back(colonia);
-		
+		d.preencheMapa(terrenos, 0);
 	}
 }
 

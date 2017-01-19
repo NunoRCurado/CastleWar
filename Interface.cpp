@@ -1,55 +1,65 @@
 #include "Interface.h"
 
-
-
 Interface::Interface()
 {
+
 }
 
 Interface::~Interface()
 {
+
 }
 
 bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int controlo)
 {
+	Desenho d;
+
 	if (comObj.getArg1() != "DIM" && controlo == 0) {
+		d.limpaLinhaProntoAvisos();
 		cout << "ERRO! Insira primeiro o tamanho do mapa" << endl;
 		return false;
 	}
 
 	else if(comObj.getArg1() == "DIM" && controlo == 0){
-		if ((atoi(comObj.getArg2().c_str()) < 20 || atoi(comObj.getArg3().c_str()) < 80)){
+		if ((atoi(comObj.getArg2().c_str()) < 0 || atoi(comObj.getArg3().c_str()) < 0)){
+			d.limpaLinhaProntoAvisos();
 			cout << "ERRO! Mapa demasiado pequeno" << endl;
 			return false;
 		}
 		else {
 			mapa->criarMapa(atoi(comObj.getArg2().c_str()), atoi(comObj.getArg3().c_str()));
+			d.limpaLinhaProntoAvisos();
 			cout << "mapa feito" << endl;
 			return true;
 		}
 	}
 	else if (comObj.getArg1() != "MOEDAS" && controlo == 1) {
+		d.limpaLinhaProntoAvisos();
 		cout << "ERRO! Insira primeiro o numero de moedas" << endl;
 		return false;
 	}
 	else if (comObj.getArg1() == "MOEDAS" && controlo == 1) {
 		if (atoi(comObj.getArg2().c_str()) <= 20) {
+			d.limpaLinhaProntoAvisos();
 			cout << "ERRO! Numero de moedas muito reduzido, insira valor maior que 20" << endl;
 			return false;
 		}
 		else {
 			jogo->setMoedasInicial(atoi(comObj.getArg2().c_str())); //verificao se introduzir strings
+			d.limpaLinhaProntoAvisos();
 			cout << "moedas inseridas" << endl;
 			return true;
 		}
 	}
 	else if (comObj.getArg1() != "OPONENTES" && controlo == 2) {
+		d.limpaLinhaProntoAvisos();
 		cout << "ERRO! Insira primeiro o numero de jogadores " << endl;
 		return false;
 	}
 
 	else if (comObj.getArg1() == "OPONENTES" && controlo == 2) {
 		if (atoi(comObj.getArg2().c_str()) <= 0) {
+			d.limpaLinhaProntoAvisos();
 			cout << "ERRO!Insira numero de jogadores valido" << endl;
 			return false;
 		}
@@ -58,6 +68,7 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 			char id = 'a';
 			for (int i = 0; i < jogo->getNumeroJogadores(); i++) {
 				mapa->setColonias(new Colonia(jogo->getMoedasInicial(), id));
+				d.limpaLinhaProntoAvisos();
 				cout << "jogador criado " << i << " com o id " << id << endl;
 				id++;
 				
@@ -66,11 +77,13 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 		}
 	}
 	else if (comObj.getArg1() == "CASTELO" && comObj.getArg2() != "A" && controlo == 3) {
+		d.limpaLinhaProntoAvisos();
 		cout << "So e possivel editar castelo do jogador humano." << endl;
 		return false;
 	}
 	else if (comObj.getArg1() == "CASTELO" && comObj.getArg2() == "A" && controlo==3) {
 		if (atoi(comObj.getArg3().c_str()) > mapa->getNumeroLinha() || atoi(comObj.getArg4().c_str()) > mapa->getNumeroColuna()) {
+			d.limpaLinhaProntoAvisos();
 			cout << "ERRO! Numero de linha/coluna invalido" << endl;
 			return false;
 		}
@@ -85,6 +98,7 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 				mapa->getTerreno().at(x)->getEdificios()->setTerreno(mapa->getTerreno().at(y));
 				mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios().at(0));
 				mapa->getTerreno().at(x)->setEdificios(NULL);
+				d.limpaLinhaProntoAvisos();
 				cout << "Castelo mudado com sucesso." << endl;
 				return true;
 			}
@@ -95,14 +109,18 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 
 bool Interface::verificaComandoFase2(Jogo * jogo, int controlo)
 {
+	Desenho d;
+
 	if (comObj.getArg1() == "MKPERFIL") {
 		if (jogo->getPerfis().size() == 5) {
+			d.limpaLinhaProntoAvisos();
 			cout << "ERRO!Ja estao 5 perfis criados" << endl;
 			return false;
 		}
 		else {
 				for (int i = 0; i < jogo->getPerfis().size(); i++) {
 					if (jogo->getPerfis().at(i)->getID() == comObj.getArg2()) {
+						d.limpaLinhaProntoAvisos();
 						cout << "ERRO!Ja existe perfil com o mesmo id" << endl;
 						return false;
 					}

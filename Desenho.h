@@ -2,6 +2,7 @@
 #ifndef Desenho_H
 #define Desenho_H
 #include "Consola.h"
+#include "Terreno.h"
 
 #include <iostream>
 #include <vector>
@@ -19,14 +20,17 @@ public:
 
 	void DesenhaScreenSize();
 	void DesenhaLimpa();
-	void limpaPosicaoActual(int posicao);
-	void DesenhoMapa();
+	void DesenhoLimitesMapa();
 	void DesenhoLimitesInfo();
 	void DesenhoLimitesComandos();
 	//void DesenhaSer(string nome, int posicao, int posicaoAnterior);
-	void DesenhaEdificio();
 	void DesenhaTudo();
-	
+	void limpaLinhaProntoComandos();
+	void limpaLinhaProntoAvisos();
+	void limpaLinhaInfo();
+	void escreveEmInfo(int linha);
+	void preencheMapa(vector <Terreno *> terreno, int i);
+
 };
 
 #endif

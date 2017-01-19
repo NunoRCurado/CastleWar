@@ -10,6 +10,7 @@
 #include <locale> 
 #include "Consola.h"
 #include "Mapa.h"
+#include "Desenho.h"
 #include "Jogo.h"
 #include "Colonia.h"
 

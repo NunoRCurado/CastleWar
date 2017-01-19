@@ -10,6 +10,7 @@
 #include "Colonia.h"
 #include "Edificios.h"
 #include "Castelo.h"
+#include "Desenho.h"
 
 class Castelo;
 class Edificios;

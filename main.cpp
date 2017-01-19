@@ -25,15 +25,13 @@ int main() {
 	Colonia colonia;
 	Jogo jogo;
 
+	desenho.DesenhaTudo();
+
 	jogo.ConfiguraJogoInicio();
 	/*jogo.ConfiguraJogoInicioProximo();*/
 
-	cout << "rekt" << endl;
+	
 
-	/*desenho.DesenhaScreenSize();*/
-	/*desenho.DesenhaTudo();*/
-	/*desenho.DesenhoLimitesInfo();
-	desenho.DesenhoMapa();*/
 	
 	//desenho.DesenhaLimpa();
 	//desenho.DesenhoLimitesComandos();
