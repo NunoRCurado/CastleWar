@@ -1,4 +1,7 @@
 #include "Quinta.h"
+#include "Terreno.h"
+#include "Colonia.h"
+#include "Edificios.h"
 
 Quinta::Quinta()
 {

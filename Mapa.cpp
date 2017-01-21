@@ -1,8 +1,8 @@
 #include "Mapa.h"
-
-Mapa::Mapa()
-{
-}
+#include "Terreno.h"
+#include "Castelo.h"
+#include "Colonia.h"
+#include "Jogo.h"
 
 Mapa::~Mapa()
 {
@@ -118,6 +118,7 @@ void Mapa::setColonias(Colonia * colonia)
 		colonia->setEdificios(castelo);
 		this->colonias.push_back(colonia);
 		this->terrenos.at(posicao)->setEdificios(castelo);
+		coloniaActual = this->colonias.at(0);
 		//inserir random e depois inserir castelo no random
 		
 	}
@@ -134,6 +135,31 @@ void Mapa::setColonias(Colonia * colonia)
 		this->terrenos.at(posicao)->setEdificios(castelo);
 	}
 }
+
+void Mapa::addSer(int numeroSeres, string idPerfil)
+{
+	int custoParaFazerSeresTotal = 0;
+	bool flag = false;
+	vector <CaracteristicasSeres*> * aux = NULL;
+	custoParaFazerSeresTotal= jogo.custoNumeroSerescomPerfil(idPerfil, numeroSeres);
+	flag = comparaDinheiroNasColonias(custoParaFazerSeresTotal, coloniaActual);
+	if(flag == true){
+		coloniaActual->setMoedas(coloniaActual->getMoedas() - custoParaFazerSeresTotal);
+		for (int i = 0; i < numeroSeres; i++) {
+			Seres *ser = new Seres('S', idPerfil);
+			aux = jogo.apanhaPerfilPeloId(idPerfil)->getCaracteristicas();
+			ser->setCaracteristicasSeres(aux);
+			ser->setForca(ser->getForca() - jogo.apanhaPerfilPeloId(idPerfil)->getForca());
+			coloniaActual->getEdificios().at(0)->colocaSeres(ser);
+			coloniaActual->setSeres(ser);
+		}
+		cout << "Foram criados " << numeroSeres << " com sucesso"<<endl;
+	}
+	else {
+		cout << "nao ha dinheiro" << endl;
+	}
+}
+
 
 bool Mapa::verificaEdificios(int linhas, int colunas, string id, int raio)
 {
@@ -206,6 +232,15 @@ int Mapa::converteCoordenadasemPosicao(int linhas, int colunas)
 	return posicao;
 }
 
+bool Mapa::comparaDinheiroNasColonias(int dinheiro, Colonia *coloniaActual)
+{
+	if (coloniaActual->getMoedas() >= dinheiro) {
+		return true;
+	}
+	else
+	return false;
+}
+
 int Mapa::randomSelector(int valInicial, int valFinal)
 {
 	random_device rd;
@@ -213,3 +248,5 @@ int Mapa::randomSelector(int valInicial, int valFinal)
 	uniform_int_distribution<int> dist(valInicial, valFinal);
 	return dist(mt);
 }
+
+

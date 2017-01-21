@@ -1,24 +1,22 @@
 #include "Interface.h"
-
-
-
-Interface::Interface()
-{
-}
+#include "Jogo.h"
+#include "Colonia.h"
+#include "Terreno.h"
 
 Interface::~Interface()
 {
 }
 
-bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int controlo)
+bool Interface::verificaComando(int controlo)
 {
+	Mapa *mapa = jogo.getMapa();
 	if (comObj.getArg1() != "DIM" && controlo == 0) {
 		cout << "ERRO! Insira primeiro o tamanho do mapa" << endl;
 		return false;
 	}
 
 	else if(comObj.getArg1() == "DIM" && controlo == 0){
-		if ((atoi(comObj.getArg2().c_str()) < 20 || atoi(comObj.getArg3().c_str()) < 80)){
+		if ((atoi(comObj.getArg2().c_str()) < 0 || atoi(comObj.getArg3().c_str()) < 0)){
 			cout << "ERRO! Mapa demasiado pequeno" << endl;
 			return false;
 		}
@@ -38,7 +36,7 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 			return false;
 		}
 		else {
-			jogo->setMoedasInicial(atoi(comObj.getArg2().c_str())); //verificao se introduzir strings
+			jogo.setMoedasInicial(atoi(comObj.getArg2().c_str())); //verificao se introduzir strings
 			cout << "moedas inseridas" << endl;
 			return true;
 		}
@@ -54,10 +52,10 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 			return false;
 		}
 		else {
-			jogo->setNumeroJogadores(atoi(comObj.getArg2().c_str()));
+			jogo.setNumeroJogadores(atoi(comObj.getArg2().c_str()));
 			char id = 'A';
-			for (int i = 0; i < jogo->getNumeroJogadores(); i++) {
-				mapa->setColonias(new Colonia(jogo->getMoedasInicial(), id));
+			for (int i = 0; i < jogo.getNumeroJogadores(); i++) {
+				mapa->setColonias(new Colonia(jogo, jogo.getMoedasInicial(), id));
 				cout << "jogador criado " << i << " com o id " << id << endl;
 				id++;
 				
@@ -93,36 +91,47 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 	
 }
 
-bool Interface::verificaComandoFase2(Jogo * jogo, int controlo)
+bool Interface::verificaComandoFase2(int controlo)
 {
 	if (comObj.getArg1() == "MKPERFIL") {
-		if (jogo->getPerfis().size() == 5) {
+		if (jogo.getPerfis().size() == 5) {
 			cout << "ERRO!Ja estao 5 perfis criados" << endl;
 			return false;
 		}
 		else {
-				for (int i = 0; i < jogo->getPerfis().size(); i++) {
-					if (jogo->getPerfis().at(i)->getID() == comObj.getArg2()) {
+				for (int i = 0; i < jogo.getPerfis().size(); i++) {
+					if (jogo.getPerfis().at(i)->getID() == comObj.getArg2()) {
 						cout << "ERRO!Ja existe perfil com o mesmo id" << endl;
 						return false;
 					}
 				}
 				Perfil *p = new Perfil(comObj.getArg2(), 10, 0);
-				jogo->setPerfis(p);
+				jogo.setPerfis(p);
 				return true;
 			}
 		}
 
 	else if (comObj.getArg1() == "ADDPERFIL") {
-		jogo->setPerfilNoVector(comObj.getArg2(), comObj.getArg3());
+		jogo.setPerfilNoVector(comObj.getArg2(), comObj.getArg3());
 		return false;
 	}
 	else if (comObj.getArg1() == "RMPERFIL") {
-		jogo->removePerfil(comObj.getArg2());
+		jogo.removePerfil(comObj.getArg2());
 		return false;
 	}
 	else if (comObj.getArg1() == "SUBPERFIL") {
-		jogo->removeCaracteristicaDoPerfil(comObj.getArg2(), comObj.getArg3());
+		jogo.removeCaracteristicaDoPerfil(comObj.getArg2(), comObj.getArg3());
+	}
+	return false;
+}
+
+bool Interface::verificaComandoInicioJogo()
+{
+	bool flag = false;
+	Mapa *mapa = jogo.getMapa();
+
+	if (comObj.getArg1() == "SER") {
+		mapa->addSer(atoi(comObj.getArg2().c_str()), comObj.getArg3());
 	}
 	return false;
 }

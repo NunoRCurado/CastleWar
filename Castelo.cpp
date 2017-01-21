@@ -1,5 +1,7 @@
 #include "Castelo.h"
 
+
+
 Castelo::Castelo()
 {
 }
@@ -11,6 +13,11 @@ Castelo::Castelo(string id, Terreno *terreno) : Edificios(id, 0, 50, 10, 0, terr
 
 Castelo::~Castelo()
 {
+}
+
+void Castelo::colocaSeres(Seres * ser)
+{
+	this->seresNoCastelo.push_back(ser);
 }
 
 void Castelo::repara(Colonia * colonia)

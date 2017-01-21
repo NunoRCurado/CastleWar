@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #ifndef ESPADA_H
 #define ESPADA_H
 

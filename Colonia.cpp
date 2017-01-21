@@ -1,10 +1,7 @@
 #include "Colonia.h"
+#include "Jogo.h"
 
-Colonia::Colonia()
-{
-}
-
-Colonia::Colonia(int moedas, char id)
+Colonia::Colonia(Jogo &jogo, int moedas, char id) : jogo(jogo)
 {
 	this->moedas = moedas;
 	this->id = id;

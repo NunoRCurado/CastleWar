@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 #include <random>
-#include "Edificios.h"
-#include "Seres.h"
 
 using namespace std;
 class Seres;
@@ -51,7 +49,7 @@ public:
 	void setSeres(Seres* seres);
 
 	void setTerrenoAdjacente(Terreno *terrenoAdjacente);
-	vector <Terreno *> getTerrenoAdjacentes() { return this->terrenosAdjacentes; }
+	vector <Terreno *> *getTerrenoAdjacentes() { return &terrenosAdjacentes; }
 
 
 };

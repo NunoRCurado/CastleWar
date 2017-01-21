@@ -6,28 +6,27 @@
 #include <string>
 #include <vector>
 #include <random>
-#include "Terreno.h"
-#include "Colonia.h"
-#include "Edificios.h"
-#include "Castelo.h"
 
-class Castelo;
-class Edificios;
-class Colonia;
+using namespace std;
 class Terreno;
+class Colonia;
+class Jogo;
+
 class Mapa {
 private:
 
 	int numeroColuna;
 	int numeroLinha;
-
+	Jogo &jogo;
 
 	vector <Terreno *> terrenos;
 	vector <Colonia *> colonias;
 
+	Colonia *coloniaActual;
+
 public:
 
-	Mapa();
+	Mapa(Jogo &jogo) : jogo(jogo) {}
 	~Mapa();
 
 
@@ -44,9 +43,19 @@ public:
 	void setColonias(Colonia *colonias);
 	vector <Colonia*> getColonias() { return this->colonias; }
 
+	void addSer(int numeroSeres, string idPerfil);
+
+	Colonia* getColoniaActual() { return this->coloniaActual; }
+	void setColoniaActual() { this->coloniaActual = coloniaActual; }
+
+
 	bool verificaEdificios(int linhas, int colunas, string id, int raio);
 	int converteCoordenadasemPosicao(int linhas, int colunas);
+	bool comparaDinheiroNasColonias(int dinheiro, Colonia *coloniaActual);
+
+
 	int randomSelector(int valInicial, int valFinal);
+
 };
 
 #endif

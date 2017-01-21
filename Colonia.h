@@ -7,23 +7,20 @@
 #include <string.h>
 #include "Edificios.h"
 #include "Seres.h"
-
+class Jogo;
 
 using namespace std;
-class Seres;
-class Edificios;
 class Colonia {
 private: 
 	double moedas;
 	char id;
-
+	Jogo &jogo;
 	vector <Seres *> seres;
 	vector <Edificios *> edificios;
 
 public:
-	
-	Colonia();
-	Colonia(int moedas, char id);
+
+	Colonia(Jogo &jogo, int moedas, char id);
 	~Colonia();
 
 	void setMoedas(double moedas) { this->moedas = moedas; }

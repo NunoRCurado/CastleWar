@@ -26,7 +26,7 @@ public:
 	string getID() { return this->id; }
 	void setID(string id) { this->id = id; }
 
-	vector <CaracteristicasSeres*> getCaracteristicas() { return this->caracteristicas; }
+	vector <CaracteristicasSeres*> *getCaracteristicas() { return &caracteristicas; }
 	void setCaracteristicas(CaracteristicasSeres *caracteristica);
 
 	int getForca() { return this->forca;}

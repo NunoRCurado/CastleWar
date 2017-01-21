@@ -4,14 +4,12 @@
 
 #include <iostream>
 #include <string.h>
-
-
-
-
+#include "Seres.h"
 
 using namespace std;
 class Terreno;
 class Colonia;
+class Seres;
 class Edificios {
 
 private:
@@ -20,7 +18,7 @@ private:
 	int saude;
 	int defesa;
 	int ataque;
-	Terreno *terreno; //criar ponteiro para colonia?
+	Terreno *terreno; 
 	int numeroUpgrades;
 
 public:
@@ -29,6 +27,10 @@ public:
 	Edificios();
 	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades);
 	~Edificios();
+
+
+	virtual vector<Seres*> *getSeres() { return NULL; }
+	virtual void colocaSeres(Seres *ser){}
 
 	virtual void setId(string id) { this->id = id; }
 	virtual string getId() { return this->id; }

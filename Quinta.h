@@ -5,12 +5,11 @@
 #include <iostream>
 #include <string.h>
 #include "Edificios.h"
-#include "Colonia.h"
 
 
 using namespace std;
-class Colonia; // aqui ou nos edificios?
 class Terreno;
+class Colonia;
 class Quinta : public Edificios {
 
 

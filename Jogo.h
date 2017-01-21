@@ -7,27 +7,11 @@
 #include <string>
 #include <vector>
 #include <random>
-#include "Interface.h"
-#include "Mapa.h"
-#include "Colonia.h"
-#include "Perfil.h"
-#include "CaracteristicasSeres.h"
-#include "Agressao.h"
-#include "Aluno.h"
-#include "Armadura.h"
-#include "Bandeira.h"
-#include "BuildSeeker.h"
-#include "Ecologico.h"
-#include "Espada.h"
-#include "Faca.h"
-#include "HeatSeeker.h"
-#include "PeleDura.h"
-#include "Remedio.h"
-#include "SecondChance.h"
-#include "Superior.h"
-#include "Walker.h"
 #include <algorithm>
-
+#include "Perfil.h"
+using namespace std;
+class Mapa;
+class Interface;
 
 
 class Jogo {
@@ -36,7 +20,8 @@ private:
 	int numeroJogadores;
 	int moedasInicial;
 	vector <Perfil*> perfis;
-
+	Mapa *mapa;
+	Interface *itf;
 	
 
 public:
@@ -45,6 +30,7 @@ public:
 
 	void ConfiguraJogoInicio();
 	void ConfiguraJogoInicioProximo();
+	void InicioJogo();
 
 	int getMoedasInicial() { return this->moedasInicial; }
 	void setMoedasInicial(int moedasInicial) { this->moedasInicial = moedasInicial; }
@@ -58,6 +44,12 @@ public:
 	void setPerfilNoVector(string id, string caracteristica);
 	bool removePerfil(string id);
 	bool removeCaracteristicaDoPerfil(string id, string id1);
+
+	int custoNumeroSerescomPerfil(string id, int numeroSeres);
+
+	Perfil * apanhaPerfilPeloId(string id);
+
+	Mapa *getMapa() { return mapa; }
 
 };
 

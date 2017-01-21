@@ -1,15 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "CaracteristicasSeres.h"
-#include "Seres.h"
-#include "Edificios.h"
-#include "Mapa.h"
-#include "Castelo.h"
 #include "Comando.h"
-#include "Interface.h"
 #include "Desenho.h"
-#include "Torre.h"
 #include "Jogo.h"
 
 
@@ -20,13 +13,12 @@ int main() {
 
 	string escreve;
 	Comando comando;
-	Interface IE;
 	Desenho desenho;
-	Colonia colonia;
 	Jogo jogo;
 
 	jogo.ConfiguraJogoInicio();
-	/*jogo.ConfiguraJogoInicioProximo();*/
+	jogo.ConfiguraJogoInicioProximo();
+	jogo.InicioJogo();
 
 	cout << "rekt" << endl;
 

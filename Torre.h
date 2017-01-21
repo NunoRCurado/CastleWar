@@ -10,8 +10,6 @@
 
 
 using namespace std;
-class Colonia;
-class Seres;
 class Terreno;
 class Torre : public Edificios {
 
