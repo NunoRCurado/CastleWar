@@ -1,16 +1,16 @@
 #include "Seres.h"
+#include "CaracteristicasSeres.h"
 
 Seres::Seres(const Seres & ser)//ver para que serve
 {
 	*this = ser;
 }
 
-Seres::Seres()
-{
-}
 
-Seres::Seres(Terreno *terreno)
+Seres::Seres(char id, string idPerfil)
 {
+	this->id = id;
+	this->perfil = idPerfil;
 	this->terreno = terreno;
 	this->ataque = 0;
 	this->defesa = 0;
@@ -54,9 +54,9 @@ Seres Seres::operator=(const Seres & ser)
 	return *this;
 }
 
-void Seres::setCaracteristicasSeres(vector<CaracteristicasSeres> caracteristicasSeres)
+void Seres::setCaracteristicasSeres(vector<CaracteristicasSeres*> *caracteristicasSeres)
 {
-	for (int i = 0; caracteristicasSeres.size(); i++) {
-		this->caracteristicasSeres.push_back(&caracteristicasSeres.at(i));
+	for (int i = 0; i < caracteristicasSeres->size(); i++) {
+		this->caracteristicasSeres.push_back(caracteristicasSeres->at(i)->duplica());
 	}	
 }

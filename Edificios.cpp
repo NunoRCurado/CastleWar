@@ -1,5 +1,6 @@
 #include "Edificios.h"
 
+
 Edificios::Edificios(const Edificios & edificio)
 {
 	*this = edificio;

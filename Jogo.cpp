@@ -1,9 +1,28 @@
 #include "Jogo.h"
+#include "Comando.h"
+#include "Interface.h"
+#include "Agressao.h"
+#include "Aluno.h"
+#include "Armadura.h"
+#include "Bandeira.h"
+#include "BuildSeeker.h"
+#include "Ecologico.h"
+#include "Espada.h"
+#include "Faca.h"
+#include "HeatSeeker.h"
+#include "PeleDura.h"
+#include "Remedio.h"
+#include "SecondChance.h"
+#include "Superior.h"
+#include "Walker.h"
 
 
 
 Jogo::Jogo()
 {
+	this->itf = new Interface(*this);
+	this->mapa = new Mapa(*this);
+
 }
 
 Jogo::~Jogo()
@@ -78,12 +97,8 @@ bool Jogo::Menu() {
 
 void Jogo::ConfiguraJogoInicio()
 {
-	Interface itf;
 	string comando;
 	Comando comObj;
-	Mapa mapa;
-	Jogo jogo;
-	Colonia colonia;
 	Desenho d;
 
 	int controlo = 0;
@@ -94,10 +109,12 @@ void Jogo::ConfiguraJogoInicio()
 		d.limpaLinhaProntoComandos();
 		getline(cin, comando);
 		comObj = comObj.separaComando(comando, comObj);
-		itf.setComando(comObj);
-		flag = itf.verificaComando(&mapa, &jogo, &colonia, controlo);
-		if (comObj.getArg1() == "NEXT" && controlo == 3)
+		itf->setComando(comObj);
+		flag = itf->verificaComando(controlo);
+		if (comObj.getArg1() == "NEXT" && controlo == 3) {
+			cout << "Vamos passar a proxima fase de configuracao" << endl;
 			break;
+		}
 		if (flag == true) {
 			controlo++;
 		}
@@ -112,19 +129,18 @@ void Jogo::ConfiguraJogoInicio()
 			else
 				controlo = 5;
 		}
+		if (controlo == 5) {
+			cout << "Vamos passar a proxima fase de configuracao" << endl;
+		}
 	} while (controlo != 5);
 	
 }
 
 void Jogo::ConfiguraJogoInicioProximo()
 {
-	Interface itf;
 	string comando;
 	Comando comObj;
-	Mapa mapa;
 	Desenho d;
-	Colonia colonia;
-	Jogo jogo;
 	bool flag = 0;
 	int controlo = 0;
 
@@ -132,8 +148,8 @@ void Jogo::ConfiguraJogoInicioProximo()
 		d.limpaLinhaProntoComandos();
 		getline(cin, comando);
 		comObj = comObj.separaComando(comando, comObj);
-		itf.setComando(comObj);
-		flag = itf.verificaComandoFase2(&jogo, controlo);
+		itf->setComando(comObj);
+		flag = itf->verificaComandoFase2(controlo);
 		controlo = perfis.size();
 		if (comObj.getArg1() == "INICIO" && controlo != 5) { //adicionar controlo que verifica se existem 5 perfis preenchidos
 			d.limpaLinhaProntoAvisos();
@@ -141,8 +157,26 @@ void Jogo::ConfiguraJogoInicioProximo()
 		}
 		if (comObj.getArg1() == "INICIO" && controlo == 5)
 			controlo = 6;
+		if (controlo == 6) {
+			cout << "Configuracao finalizado, vamos dar inicio ao jogo" << endl;
+		}
 	} while (controlo != 6);
 	
+}
+
+void Jogo::InicioJogo()
+{
+	string comando;
+	Comando comObj;
+	bool flag = 0;
+	int controlo = 0;
+
+	do {
+		getline(cin, comando);
+		comObj = comObj.separaComando(comando, comObj);
+		itf->setComando(comObj);
+		flag = itf->verificaComandoInicioJogo();
+	} while (controlo != 6);//adicionar aqui saida ou outro pc
 }
 
 void Jogo::setPerfis(Perfil * perfil)
@@ -403,14 +437,14 @@ bool Jogo::removeCaracteristicaDoPerfil(string id, string id1){
 		for (int i = 0; i < this->perfis.size(); i++) {
 			if (this->perfis.at(i)->getID() == id) {
 				//por aqui vector aux do tipo caract
-				vector <CaracteristicasSeres*> aux = perfis.at(i)->getCaracteristicas();
+				vector <CaracteristicasSeres*> *aux = perfis.at(i)->getCaracteristicas();
 	
-				for (int j = 0; j <aux.size(); j++) {
-					if (aux.at(j)->getNome() == id1){
-						aux.erase(remove(aux.begin(), aux.end(), aux.at(j)), aux.end());
-						perfis.at(i)->setVectorCaracteristicas(aux);
+				for (int j = 0; j <aux->size(); j++) {
+					if (aux->at(j)->getNome() == id1){
+						aux->erase(remove(aux->begin(), aux->end(), aux->at(j)), aux->end());
+						perfis.at(i)->setVectorCaracteristicas(*aux);
 						d.limpaLinhaProntoAvisos();
-						cout << "Caracteristica apagada" << endl;
+						cout << "TODAS as caracteristicas com este nome foram apagadas!" << endl;
 						return false;
 					}
 				}
@@ -419,4 +453,27 @@ bool Jogo::removeCaracteristicaDoPerfil(string id, string id1){
 	d.limpaLinhaProntoAvisos();
 	cout << "Caracteristica/Perfil nao encontrado" << endl;
 	return false;
+}
+
+int Jogo::custoNumeroSerescomPerfil(string id, int numeroSeres)
+{
+	int custoTotal = 0;
+	for (int i = 0; i < this->perfis.size(); i++) {
+		if (this->perfis.at(i)->getID() == id) {
+			custoTotal = this->perfis.at(i)->getCusto() * numeroSeres;
+			return custoTotal;
+		}
+
+	}
+	return 0;
+}
+
+Perfil * Jogo::apanhaPerfilPeloId(string id)
+{
+	for (int i = 0; i < perfis.size(); i++) {
+		if (perfis.at(i)->getID() == id)
+			return perfis.at(i);
+	}
+	return NULL;
+	
 }

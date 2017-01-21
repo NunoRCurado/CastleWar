@@ -1,4 +1,5 @@
 #include "Torre.h"
+#include "Terreno.h"
 
 Torre::Torre()
 {
@@ -15,14 +16,14 @@ Torre::~Torre()
 
 void Torre::efeito(Colonia *colonia)
 {
-	//tem q ir verificar se ha seres inimigos a volta, utilizar vector de vizinhos?
-	// se houver da o dano
-	for (int i = 0; i < getTerreno()->getTerrenoAdjacentes().size(); i++) {
-		if (getTerreno()->getTerrenoAdjacentes().at(i)->getSeres() != NULL) { //bandeira
-			getTerreno()->getTerrenoAdjacentes().at(i)->getSeres()->setSaude(getTerreno()->getTerrenoAdjacentes().at(i)->getSeres()->getSaude() - getAtaque());
-		}
+	////tem q ir verificar se ha seres inimigos a volta, utilizar vector de vizinhos?
+	//// se houver da o dano
+	//for (int i = 0; i < getTerreno()->getTerrenoAdjacentes().size(); i++) {
+	//	if (getTerreno()->getTerrenoAdjacentes().at(i)->getSeres() != NULL) { //bandeira
+	//		getTerreno()->getTerrenoAdjacentes().at(i)->getSeres()->setSaude(getTerreno()->getTerrenoAdjacentes().at(i)->getSeres()->getSaude() - getAtaque());
+	//	}
 
-	}
+	//}
 
 
 

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Seres.H"
+#include "Seres.h"
 #include "Mapa.h"
 
 using namespace std;
@@ -25,7 +25,6 @@ public:
 	CaracteristicasSeres(int id, int custoMonetario, int custoForca, bool activo, string nome);
 	CaracteristicasSeres();
 	~CaracteristicasSeres();
-
 
 
 	virtual void efeito(Seres *ser, Mapa *mapa) = 0;

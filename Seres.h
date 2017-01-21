@@ -5,11 +5,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "CaracteristicasSeres.h"
 
 
 using namespace std;
 class CaracteristicasSeres;
+class Colonia;
 class Terreno;
 class Seres {
 
@@ -20,18 +20,18 @@ private:
 	int velocidade;
 	int ataque;
 	int defesa;
-	int perfil;
+	string perfil;
 	int localizacao;
 	Terreno *terreno;
-
+	
 
 	vector <CaracteristicasSeres *> caracteristicasSeres; 
 
 public:
 	Seres(const Seres &ser);
-	Seres();
-	Seres(Terreno *terreno);
+	Seres(char id, string idPerfil);
 	~Seres();
+
 
 	//construtor por copia
 	Seres operator=(const Seres &ser);
@@ -57,14 +57,14 @@ public:
 	void setTerreno(Terreno *terreno) { this->terreno = terreno; }
 	Terreno * getTerreno() { return this->terreno; }
 
-	void setPerfil(int perfil) { this->perfil = perfil; }
-	int getPerfil() { return this->perfil; }
+	void setPerfil(string perfil) { this->perfil = perfil; }
+	string getPerfil() { return this->perfil; }
 
 	void setId(int id) { this->id = id; }
 	int getId() { return this->id; }
 
 	vector <CaracteristicasSeres*> getCaracteristicasSeres() { return this->caracteristicasSeres;}
-	void setCaracteristicasSeres(vector <CaracteristicasSeres> caracteristicasSeres);
+	void setCaracteristicasSeres(vector<CaracteristicasSeres*>* caracteristicasSeres);
 
 	Seres *duplica() {
 		return new Seres(*this);
