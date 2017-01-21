@@ -16,7 +16,7 @@ class Quinta : public Edificios {
 public:
 
 	Quinta();
-	Quinta(string id, Terreno *terreno);
+	Quinta(string id, Terreno *terreno, int edificioId);
 	~Quinta();
 
 

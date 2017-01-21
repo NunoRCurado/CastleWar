@@ -3,6 +3,8 @@
 #include "Castelo.h"
 #include "Colonia.h"
 #include "Jogo.h"
+#include "Torre.h"
+#include "Quinta.h"
 
 Mapa::~Mapa()
 {
@@ -259,12 +261,140 @@ void Mapa::setMoedasaUmaColonia(string id, int numero)
 
 void Mapa::constroiEdificio(string id, int linha, int coluna)
 {
+	bool flag = false;
 	if (id == "TORRE") {
-
+		flag = verificaProximidadeAoProprioCasteloTorre(linha, coluna, coloniaActual, 10);
 	}
 	else if (id == "QUINTA") {
+		flag = verificaProximidadeAoProprioCasteloQuinta(linha, coluna, coloniaActual, 10);
+	}
+}
+
+bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Colonia * coloniaActual, int raio)
+{
+	int Lmin = linhas - raio;
+	int Lmax = linhas + raio;
+	int Cmin = colunas - raio;
+	int Cmax = colunas + raio;
+
+	int verificaLmin = 0;
+	int verificaCmin = 0;
+	int verificaLmax = 0;
+	int verificaCmax = 0;
+
+	if (Lmin < 0) {
+		verificaLmin = Lmin; //Lmin e sempre negativo?
+		Lmin = 0;
 
 	}
+	if (Lmax > this->numeroLinha - 1) {
+		verificaLmax = Lmax - this->numeroLinha - 1;
+		Lmax = this->numeroLinha - 1;
+	}
+	if (Cmin < 0) {
+		verificaCmin = Cmin;
+		Cmin = 0;
+	}
+	if (Cmax > this->numeroColuna - 1) {
+		verificaCmax = Cmax - this->numeroColuna - 1;
+		Cmax = this->numeroColuna - 1;
+	}
+
+	int posicaoInicio = converteCoordenadasemPosicao(Lmin, Cmin);
+	int posicaoDoEdificio = converteCoordenadasemPosicao(linhas, colunas);
+	int posicaoDoCastelo = coloniaActual->getEdificios().at(0)->getTerreno()->getPosicao();
+	int edificioID = coloniaActual->getEdificios().back()->getEdificioID() + 1;
+	
+
+	int colunaCalculo = raio * 2 + verificaCmin - verificaCmax - 1;
+	int linhaCalculo = raio * 2 + verificaLmin - verificaLmax - 1;
+	
+	if (this->terrenos.at(posicaoDoEdificio)->getEdificios() != NULL) {
+		cout << "Ja existem edificios nessa posicao" << endl;
+		return false;
+	}
+	for (int i = 0; i < colunaCalculo; i++) {
+		for (int j = 0; j < linhaCalculo; j++) {
+			int x = (posicaoInicio + i) + this->numeroColuna*j;
+			if (this->terrenos.at(x)->getPosicao() == posicaoDoCastelo) {
+				Torre *torre = new Torre("TORRE", terrenos.at(posicaoDoEdificio), edificioID);
+				int dinheiroColonia = coloniaActual->getMoedas();
+				if (torre->getCusto() <= dinheiroColonia) {
+					coloniaActual->setMoedas(coloniaActual->getMoedas() - torre->getCusto());
+					coloniaActual->setEdificios(torre);
+					terrenos.at(posicaoDoEdificio)->setEdificios(torre);
+					cout << "Torre adicionada com sucesso" << endl;
+					return true;
+				}
+			}
+		}
+	}
+	cout << "Nao foi possivel adicionar a Torre" << endl;
+	return false;
+}
+
+bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia * coloniaActual, int raio)
+{
+	int Lmin = linhas - raio;
+	int Lmax = linhas + raio;
+	int Cmin = colunas - raio;
+	int Cmax = colunas + raio;
+
+	int verificaLmin = 0;
+	int verificaCmin = 0;
+	int verificaLmax = 0;
+	int verificaCmax = 0;
+
+	if (Lmin < 0) {
+		verificaLmin = Lmin; //Lmin e sempre negativo?
+		Lmin = 0;
+
+	}
+	if (Lmax > this->numeroLinha - 1) {
+		verificaLmax = Lmax - this->numeroLinha - 1;
+		Lmax = this->numeroLinha - 1;
+	}
+	if (Cmin < 0) {
+		verificaCmin = Cmin;
+		Cmin = 0;
+	}
+	if (Cmax > this->numeroColuna - 1) {
+		verificaCmax = Cmax - this->numeroColuna - 1;
+		Cmax = this->numeroColuna - 1;
+	}
+
+	int posicaoInicio = converteCoordenadasemPosicao(Lmin, Cmin);
+	int posicaoDoEdificio = converteCoordenadasemPosicao(linhas, colunas);
+	int posicaoDoCastelo = coloniaActual->getEdificios().at(0)->getTerreno()->getPosicao();
+	int edificioID = coloniaActual->getEdificios().back()->getEdificioID() + 1;
+	//pode dar erro se vec vazio utilizar o vec empty?
+
+	int colunaCalculo = raio * 2 + verificaCmin - verificaCmax - 1;
+	int linhaCalculo = raio * 2 + verificaLmin - verificaLmax - 1;
+
+
+	if (this->terrenos.at(posicaoDoEdificio)->getEdificios() != NULL) {
+		cout << "Ja existem edificios nessa posicao" << endl;
+		return false;
+	}
+	for (int i = 0; i < colunaCalculo; i++) {
+		for (int j = 0; j < linhaCalculo; j++) {
+			int x = (posicaoInicio + i) + this->numeroColuna*j;
+			if (this->terrenos.at(x)->getPosicao() == posicaoDoCastelo) {
+				Quinta *quinta = new Quinta("Quinta", terrenos.at(posicaoDoEdificio), edificioID);
+				int dinheiroColonia = coloniaActual->getMoedas();
+				if (quinta->getCusto() <= dinheiroColonia) {
+					coloniaActual->setMoedas(coloniaActual->getMoedas() - quinta->getCusto());
+					coloniaActual->setEdificios(quinta);
+					terrenos.at(posicaoDoEdificio)->setEdificios(quinta);
+					cout << "Quinta adicionada com sucesso" << endl;
+					return true;
+				}
+			}
+		}
+	}
+	cout << "Nao foi possivel adicionar a Quinta" << endl;
+	return false;
 }
 
 int Mapa::randomSelector(int valInicial, int valFinal)

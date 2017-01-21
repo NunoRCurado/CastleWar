@@ -162,6 +162,11 @@ bool Interface::verificaComandoInicioJogo()
 		mapa->setMoedasaUmaColonia(comObj.getArg2(), atoi(comObj.getArg3().c_str()));
 		return false;
 	}
+	if (comObj.getArg1() == "BUILD") {
+		mapa->constroiEdificio(comObj.getArg2(), atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
+		return false;
+	}
+	if(comObj.getArg1() == "MKBUILD")
 	return false;
 }
 

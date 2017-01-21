@@ -56,7 +56,8 @@ public:
 	void setMoedasaUmaColonia(string id, int numero);
 
 	void constroiEdificio(string id, int linha, int coluna);
-
+	bool verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Colonia *coloniaActual, int raio);
+	bool verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia *coloniaActual, int raio);
 
 	int randomSelector(int valInicial, int valFinal);
 

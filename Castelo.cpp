@@ -6,7 +6,7 @@ Castelo::Castelo()
 {
 }
 
-Castelo::Castelo(string id, Terreno *terreno) : Edificios(id, 0, 50, 10, 0, terreno, 0 )
+Castelo::Castelo(string id, Terreno *terreno) : Edificios(id, 0, 50, 10, 0, terreno, 0, 0)
 {
 	
 }

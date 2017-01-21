@@ -6,7 +6,7 @@ Torre::Torre()
 }
 
 
-Torre::Torre(string id, Terreno *terreno) : Edificios (id, 20,20,10, 3, terreno,0)
+Torre::Torre(string id, Terreno *terreno, int edificioId) : Edificios (id, 20,20,10, 3, terreno,0, 0)
 {
 }
 
@@ -47,6 +47,7 @@ void Torre::vende(Colonia * colonia)
 {
 	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5)));
 	delete this->getTerreno()->getEdificios();
+	
 }
 
 void Torre::repara(Colonia * colonia)

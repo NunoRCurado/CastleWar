@@ -8,7 +8,7 @@ Quinta::Quinta()
 }
 
 
-Quinta::Quinta(string id, Terreno *terreno) : Edificios (id, 30, 20, 10, 0, terreno, 0)
+Quinta::Quinta(string id, Terreno *terreno, int edificioId) : Edificios (id, 30, 20, 10, 0, terreno, 0, 0)
 {
 }
 
