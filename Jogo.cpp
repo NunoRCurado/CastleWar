@@ -501,3 +501,4 @@ Perfil * Jogo::apanhaPerfilPeloId(string id)
 	return NULL;
 	
 }
+

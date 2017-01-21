@@ -18,6 +18,7 @@ private:
 	int saude;
 	int defesa;
 	int ataque;
+	int edificioID;
 	Terreno *terreno; 
 	int numeroUpgrades;
 
@@ -25,12 +26,15 @@ public:
 
 	Edificios(const Edificios &edificio); 
 	Edificios();
-	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades);
+	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades, int edificioID);
 	~Edificios();
 
 
 	virtual vector<Seres*> *getSeres() { return NULL; }
 	virtual void colocaSeres(Seres *ser){}
+
+	virtual void setEdificioID(int EID) { this->edificioID = EID; }
+	virtual int getEdificioID() { return this->edificioID; }
 
 	virtual void setId(string id) { this->id = id; }
 	virtual string getId() { return this->id; }
@@ -75,6 +79,7 @@ public:
 		this->custo = x.custo;
 		this->ataque = x.ataque;
 		this->numeroUpgrades;
+		this->edificioID = x.edificioID;
 
 		return *this;
 	}

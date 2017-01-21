@@ -156,6 +156,11 @@ bool Interface::verificaComandoInicioJogo()
 
 	if (comObj.getArg1() == "SER") {
 		mapa->addSer(atoi(comObj.getArg2().c_str()), comObj.getArg3());
+		return false;
+	}
+	if (comObj.getArg1() == "SETMOEDAS"){
+		mapa->setMoedasaUmaColonia(comObj.getArg2(), atoi(comObj.getArg3().c_str()));
+		return false;
 	}
 	return false;
 }
