@@ -1,0 +1,9 @@
+Dim 20 40
+Moedas 40
+Oponentes 2
+Next
+Mkperfil a
+Mkperfil b
+Mkperfil c
+Mkperfil d
+Mkperfil e

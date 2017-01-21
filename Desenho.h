@@ -3,6 +3,7 @@
 #define Desenho_H
 #include "Consola.h"
 #include "Terreno.h"
+#include "Mapa.h"
 
 #include <iostream>
 #include <vector>
@@ -18,6 +19,9 @@ public:
 	Desenho();
 	~Desenho();
 
+	void SetTitulo(int linha);
+
+
 	void DesenhaScreenSize();
 	void DesenhaLimpa();
 	void DesenhoLimitesMapa();
@@ -28,8 +32,9 @@ public:
 	void limpaLinhaProntoComandos();
 	void limpaLinhaProntoAvisos();
 	void limpaLinhaInfo();
+	void MapaInicial();
 	void escreveEmInfo(int linha);
-	void preencheMapa(vector <Terreno *> terreno, int i);
+	void preencheMapa(Mapa *mapa, int i);
 
 };
 

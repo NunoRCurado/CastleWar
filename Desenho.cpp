@@ -17,6 +17,15 @@ Desenho::~Desenho(void)
 
 }
 
+void Desenho::SetTitulo(int linha) {
+	Consola c;
+	int i;
+	for (i = 0; i < 130; i++) {
+		c.gotoxy(i, linha);
+		cout << " ";
+	}
+	c.gotoxy(25, linha);
+}
 
 void Desenho::DesenhoLimitesComandos()
 {
@@ -31,7 +40,7 @@ void Desenho::DesenhoLimitesComandos()
 	for (int i = 13; i < 117; i++) //top
 	{
 		c.gotoxy(i, 26);
-		cout << (char)196;
+cout << (char)196;
 	}
 	c.gotoxy(117, 26);
 	cout << (char)191; //canto superior direito
@@ -109,33 +118,66 @@ void Desenho::limpaLinhaInfo()
 void Desenho::escreveEmInfo(int linha)
 {
 	Consola c;
-	c.gotoxy(92, linha+2);
+	c.gotoxy(92, linha);
 }
 
-void Desenho::preencheMapa(vector <Terreno *> terreno , int inicio)
+void Desenho::MapaInicial() {
+	Consola c;
+	for (int y = 3; y < 23; y++) {
+		for (int x = 3; x < 83; x++) {
+			c.gotoxy(x, y);
+			cout << ".";
+		}
+	}
+	c.gotoxy(27, 13);
+}
+
+void Desenho::preencheMapa(Mapa *mapa, int inicio)
 {
 	Consola c;
-		for (int x = 3; x < 83; x++) {
-			for (int y = 3; y < 23; y++) {
-				c.gotoxy(x, y);
-				if (terreno.at(inicio)->getEdificios() != NULL) {
-					cout << terreno.at(inicio)->getEdificios()->getId();
-					inicio++;
+	int nCol = 0;
+	int nEdi = 0;
+	for (int y = 3; y < 23; y++) { // 23
+		for (int x = 3; x < 83; x++) { // 83
+			c.gotoxy(x, y);
+			if (mapa->getTerreno().at(inicio)->getEdificios() != NULL) {
+				for (nCol = 0; nCol < mapa->getColonias().size(); nCol++) {
+					for (nEdi = 0; nEdi < mapa->getColonias().at(nCol)->getEdificios().size(); nEdi++) {
+						if (mapa->getColonias().at(nCol)->getEdificios().at(nEdi)->getTerreno()->getPosicao() == inicio) {
+							c.setTextColor(mapa->getColonias().at(nCol)->getCor());
+							break;
+						}
+					}
 				}
-				else if (terreno.at(inicio)->getSeres() != NULL) {
-					cout << terreno.at(inicio)->getSeres()->getId();
-					inicio++;
+				cout << mapa->getTerreno().at(inicio)->getEdificios()->getId();
+				inicio++;
+				nCol++;
+				c.setTextColor(7);
+			}
+			else if (mapa->getTerreno().at(inicio)->getSeres() != NULL) {
+				for (nCol = 0; nCol < mapa->getColonias().size(); nCol++) {
+					for (nEdi = 0; nEdi < mapa->getColonias().at(nCol)->getEdificios().size(); nEdi++) {
+						if (mapa->getColonias().at(nCol)->getSeres().at(nEdi)->getTerreno()->getPosicao() == inicio) {
+							c.setTextColor(mapa->getColonias().at(nCol)->getCor());
+							break;
+						}
+					}
 				}
-				else {
-					cout << ".";
-					inicio++;
-				}
-		}
+				cout << mapa->getTerreno().at(inicio)->getSeres()->getId();
+				inicio++;
+				c.setTextColor(7);
+			}
+			else {
+				cout << ".";
+				inicio++;
+			}
 			x++;
+		}
 	}
 	c.gotoxy(27, 13);
 	
 }
+
 void Desenho::DesenhoLimitesInfo()
 {
 	Consola c;

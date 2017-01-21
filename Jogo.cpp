@@ -10,6 +10,72 @@ Jogo::~Jogo()
 {
 }
 
+void Jogo::ConfiguraJogoFicheiro() {
+	Interface itf;
+	string comando;
+	Comando comObj;
+	Mapa mapa;
+	Jogo jogo;
+	Colonia colonia;
+	Desenho d;
+
+	int controlo = 0;
+	bool flag = false;
+	char s;
+	
+	ifstream ifi("Setup.txt");
+	if (ifi.is_open() == false) {
+		cout << "Erro a abrir ficheiro" << endl;
+		return;
+	}
+	while (getline(ifi, comando)) {
+		comObj = comObj.separaComando(comando, comObj);
+		itf.setComando(comObj);
+		flag = itf.verificaComando(&mapa, &jogo, &colonia, controlo);
+		if (comObj.getArg1() == "NEXT" && controlo == 3)
+			break;
+		if (flag == true) {
+			controlo++;
+		}
+	}
+	while (getline(ifi, comando)) {
+		comObj = comObj.separaComando(comando, comObj);
+		itf.setComando(comObj);
+		flag = itf.verificaComandoFase2(&jogo, controlo);
+		controlo = perfis.size();
+		if (comObj.getArg1() == "INICIO" && controlo != 5) { //adicionar controlo que verifica se existem 5 perfis preenchidos
+			d.limpaLinhaProntoAvisos();
+			cout << "Nao existem 5 perfis criados";
+		}
+		if (comObj.getArg1() == "INICIO" && controlo == 5)
+			controlo = 6;
+	}
+
+}
+
+bool Jogo::Menu() {
+	Desenho d;
+	string opcao;
+	d.SetTitulo(17);
+	cout << "1 - Criar Jogo";
+	d.SetTitulo(18);
+	cout << "2 - Carregar Jogo";
+	while (1) {
+		d.SetTitulo(19);
+		getline(cin, opcao);
+		int opcaon = atoi(opcao.c_str());
+		switch (opcaon) {
+			case 1:
+				return true;
+				break;
+			case 2:
+				return false;
+				break;
+		}
+	}
+		
+}
+
 void Jogo::ConfiguraJogoInicio()
 {
 	Interface itf;
@@ -38,6 +104,7 @@ void Jogo::ConfiguraJogoInicio()
 		if (controlo == 4) {
 			d.limpaLinhaProntoAvisos();
 			cout << "Deseja alterar a posicao do castelo?[s/n]" << endl;
+			d.limpaLinhaProntoComandos();
 			cin >> s;
 			if (s == 's') {
 				controlo = 3;
@@ -68,9 +135,10 @@ void Jogo::ConfiguraJogoInicioProximo()
 		itf.setComando(comObj);
 		flag = itf.verificaComandoFase2(&jogo, controlo);
 		controlo = perfis.size();
-		if (comObj.getArg1() == "INICIO" && controlo != 5) //adicionar controlo que verifica se existem 5 perfis preenchidos
+		if (comObj.getArg1() == "INICIO" && controlo != 5) { //adicionar controlo que verifica se existem 5 perfis preenchidos
 			d.limpaLinhaProntoAvisos();
-			cout << "Nao existem 5 perfis criados" << endl;
+			cout << "Nao existem 5 perfis criados";
+		}
 		if (comObj.getArg1() == "INICIO" && controlo == 5)
 			controlo = 6;
 	} while (controlo != 6);

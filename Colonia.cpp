@@ -4,10 +4,11 @@ Colonia::Colonia()
 {
 }
 
-Colonia::Colonia(int moedas, char id)
+Colonia::Colonia(int moedas, char id, int cor)
 {
 	this->moedas = moedas;
 	this->id = id;
+	this->cor = cor;
 }
 
 Colonia::~Colonia()

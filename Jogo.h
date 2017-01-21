@@ -43,6 +43,11 @@ public:
 	Jogo();
 	~Jogo();
 
+	void ConfiguraJogoFicheiro();
+
+	bool Menu();
+
+
 	void ConfiguraJogoInicio();
 	void ConfiguraJogoInicioProximo();
 

@@ -24,12 +24,26 @@ int main() {
 	Desenho desenho;
 	Colonia colonia;
 	Jogo jogo;
+	bool opcao;
 
-	desenho.DesenhaTudo();
+	desenho.DesenhaScreenSize();
+	opcao=jogo.Menu();
 
-	jogo.ConfiguraJogoInicio();
-	/*jogo.ConfiguraJogoInicioProximo();*/
+	if (opcao) {
+		desenho.DesenhaLimpa();
+		desenho.DesenhaTudo();
 
+		jogo.ConfiguraJogoInicio();
+		/*jogo.ConfiguraJogoInicioProximo();*/
+
+	}
+	else {
+		desenho.DesenhaLimpa();
+		desenho.DesenhaTudo();
+
+		jogo.ConfiguraJogoFicheiro();
+	}
+	
 	
 
 	
@@ -124,6 +138,6 @@ int main() {
 
 
 
-	
+	//desenho.DesenhaLimpa();
 
 }

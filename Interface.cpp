@@ -13,7 +13,7 @@ Interface::~Interface()
 bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int controlo)
 {
 	Desenho d;
-
+	
 	if (comObj.getArg1() != "DIM" && controlo == 0) {
 		d.limpaLinhaProntoAvisos();
 		cout << "ERRO! Insira primeiro o tamanho do mapa" << endl;
@@ -67,12 +67,16 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 			jogo->setNumeroJogadores(atoi(comObj.getArg2().c_str()));
 			char id = 'A';
 			for (int i = 0; i < jogo->getNumeroJogadores(); i++) {
-				mapa->setColonias(new Colonia(jogo->getMoedasInicial(), id));
-				d.limpaLinhaProntoAvisos();
-				cout << "jogador criado " << i << " com o id " << id << endl;
+				mapa->setColonias(new Colonia(jogo->getMoedasInicial(), id, i+1));
+				d.escreveEmInfo(3 + i);
+				c.setTextColor(mapa->getColonias().at(i)->getCor());
+				cout << "Jogador " << id;
 				id++;
-				
 			}
+			c.setTextColor(7);
+			d.preencheMapa(mapa, 0);
+			d.limpaLinhaProntoAvisos();
+			cout << jogo->getNumeroJogadores() << " jogadores criados";
 			return true;
 		}
 	}
@@ -96,7 +100,8 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 						mapa->getTerreno().at(x)->getEdificios()->setTerreno(mapa->getTerreno().at(y));
 						mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios().at(0));
 						mapa->getTerreno().at(x)->setEdificios(NULL);
-						
+						d.preencheMapa(mapa, 0);
+						d.limpaLinhaProntoAvisos();
 						cout << "Castelo "<< comObj.getArg2()<< " mudado com sucesso." << endl;
 						return true;
 					}
@@ -104,7 +109,7 @@ bool Interface::verificaComando(Mapa * mapa, Jogo *jogo, Colonia *colonia, int c
 		}
 	}	
 	
-}
+
 
 bool Interface::verificaComandoFase2(Jogo * jogo, int controlo)
 {
