@@ -1,0 +1,45 @@
+#pragma once
+#ifndef Desenho_H
+#define Desenho_H
+<<<<<<< HEAD
+#include "Consola.h"
+#include "Terreno.h"
+#include "Mapa.h"
+=======
+>>>>>>> 53430531f7a6de2ddbe6a5e94fbfd0866204eaff
+
+#include "Consola.h"
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Desenho
+{
+	int x;
+	int y;
+
+public:
+	Desenho(int x, int y);
+	Desenho();
+	~Desenho();
+
+	void SetTitulo(int linha);
+
+
+	void DesenhaScreenSize();
+	void DesenhaLimpa();
+	void DesenhoLimitesMapa();
+	void DesenhoLimitesInfo();
+	void DesenhoLimitesComandos();
+	//void DesenhaSer(string nome, int posicao, int posicaoAnterior);
+	void DesenhaTudo();
+	void limpaLinhaProntoComandos();
+	void limpaLinhaProntoAvisos();
+	void limpaLinhaInfo();
+	void MapaInicial();
+	void escreveEmInfo(int linha);
+	void preencheMapa(Mapa *mapa, int i);
+
+};
+
+#endif
