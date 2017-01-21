@@ -241,6 +241,27 @@ bool Mapa::comparaDinheiroNasColonias(int dinheiro, Colonia *coloniaActual)
 	return false;
 }
 
+void Mapa::setMoedasaUmaColonia(string id, int numero)
+{
+	for (int i = 0; i < colonias.size(); i++) {
+		if (colonias.at(i)->getId() == id[0]) {
+			colonias.at(i)->setMoedas(colonias.at(i)->getMoedas() - numero);
+			cout << "Alteracoes feitas as moedas da colonia " << id << endl;
+			break;
+		}
+	}
+}
+
+void Mapa::constroiEdificio(string id, int linha, int coluna)
+{
+	if (id == "TORRE") {
+
+	}
+	else if (id == "QUINTA") {
+
+	}
+}
+
 int Mapa::randomSelector(int valInicial, int valFinal)
 {
 	random_device rd;

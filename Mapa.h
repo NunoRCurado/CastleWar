@@ -52,6 +52,9 @@ public:
 	bool verificaEdificios(int linhas, int colunas, string id, int raio);
 	int converteCoordenadasemPosicao(int linhas, int colunas);
 	bool comparaDinheiroNasColonias(int dinheiro, Colonia *coloniaActual);
+	void setMoedasaUmaColonia(string id, int numero);
+
+	void constroiEdificio(string id, int linha, int coluna);
 
 
 	int randomSelector(int valInicial, int valFinal);

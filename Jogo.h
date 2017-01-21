@@ -49,6 +49,7 @@ public:
 
 	Perfil * apanhaPerfilPeloId(string id);
 
+
 	Mapa *getMapa() { return mapa; }
 
 };
