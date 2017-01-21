@@ -21,7 +21,7 @@ private:
 
 public:
 
-	Colonia(Jogo &jogo, int moedas, char id);
+	Colonia(Jogo &jogo, int moedas, char id, int cor);
 	~Colonia();
 
 	void setMoedas(double moedas) { this->moedas = moedas; }

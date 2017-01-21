@@ -25,8 +25,8 @@ int main() {
 		desenho.DesenhaTudo();
 
 		jogo.ConfiguraJogoInicio();
-	/*jogo.ConfiguraJogoInicioProximo();*/
-	jogo.InicioJogo();
+		jogo.ConfiguraJogoInicioProximo();
+		jogo.InicioJogo();
 
 	}
 	else {

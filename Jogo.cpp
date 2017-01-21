@@ -30,12 +30,8 @@ Jogo::~Jogo()
 }
 
 void Jogo::ConfiguraJogoFicheiro() {
-	Interface itf;
 	string comando;
 	Comando comObj;
-	Mapa mapa;
-	Jogo jogo;
-	Colonia colonia;
 	Desenho d;
 
 	int controlo = 0;
@@ -47,28 +43,52 @@ void Jogo::ConfiguraJogoFicheiro() {
 		cout << "Erro a abrir ficheiro" << endl;
 		return;
 	}
-	while (getline(ifi, comando)) {
+	while (getline(ifi, comando)) {			//ConfiguraJogoInicio
 		comObj = comObj.separaComando(comando, comObj);
-		itf.setComando(comObj);
-		flag = itf.verificaComando(&mapa, &jogo, &colonia, controlo);
-		if (comObj.getArg1() == "NEXT" && controlo == 3)
+		itf->setComando(comObj);
+		flag = itf->verificaComando(controlo);
+		if (comObj.getArg1() == "NEXT" && controlo == 3) {
+			cout << "Vamos passar a proxima fase de configuracao" << endl;
 			break;
+		}
 		if (flag == true) {
 			controlo++;
 		}
-	}
-	while (getline(ifi, comando)) {
-		comObj = comObj.separaComando(comando, comObj);
-		itf.setComando(comObj);
-		flag = itf.verificaComandoFase2(&jogo, controlo);
-		controlo = perfis.size();
-		if (comObj.getArg1() == "INICIO" && controlo != 5) { //adicionar controlo que verifica se existem 5 perfis preenchidos
+		if (controlo == 4) {
 			d.limpaLinhaProntoAvisos();
-			cout << "Nao existem 5 perfis criados";
+			cout << "Deseja alterar a posicao do castelo?[s/n]" << endl;
+			d.limpaLinhaProntoComandos();
+			cin >> s;
+			if (s == 's') {
+				controlo = 3;
+			}
+			else
+				controlo = 5;
 		}
-		if (comObj.getArg1() == "INICIO" && controlo == 5)
-			controlo = 6;
+		if (controlo == 5) {
+			d.limpaLinhaProntoAvisos();
+			cout << "Vamos passar a proxima fase de configuracao" << endl;
+		}
 	}
+
+	while (getline(ifi, comando)){			//ConfiguraJogoInicioProximo
+	comObj = comObj.separaComando(comando, comObj);
+	itf->setComando(comObj);
+	flag = itf->verificaComandoFase2(controlo);
+	controlo = perfis.size();
+	if (comObj.getArg1() == "INICIO" && controlo != 5) { //adicionar controlo que verifica se existem 5 perfis preenchidos
+		d.limpaLinhaProntoAvisos();
+		cout << "Nao existem 5 perfis criados";
+	}
+	if (comObj.getArg1() == "INICIO" && controlo == 5)
+		controlo = 6;
+	if (controlo == 6) {
+		d.limpaLinhaProntoAvisos();
+		cout << "Configuracao finalizado, vamos dar inicio ao jogo" << endl;
+		}
+	}
+
+	this->InicioJogo();
 
 }
 
@@ -130,6 +150,7 @@ void Jogo::ConfiguraJogoInicio()
 				controlo = 5;
 		}
 		if (controlo == 5) {
+			d.limpaLinhaProntoAvisos();
 			cout << "Vamos passar a proxima fase de configuracao" << endl;
 		}
 	} while (controlo != 5);
@@ -158,6 +179,7 @@ void Jogo::ConfiguraJogoInicioProximo()
 		if (comObj.getArg1() == "INICIO" && controlo == 5)
 			controlo = 6;
 		if (controlo == 6) {
+			d.limpaLinhaProntoAvisos();
 			cout << "Configuracao finalizado, vamos dar inicio ao jogo" << endl;
 		}
 	} while (controlo != 6);
@@ -166,12 +188,14 @@ void Jogo::ConfiguraJogoInicioProximo()
 
 void Jogo::InicioJogo()
 {
+	Desenho d;
 	string comando;
 	Comando comObj;
 	bool flag = 0;
 	int controlo = 0;
 
 	do {
+		d.limpaLinhaProntoComandos();
 		getline(cin, comando);
 		comObj = comObj.separaComando(comando, comObj);
 		itf->setComando(comObj);

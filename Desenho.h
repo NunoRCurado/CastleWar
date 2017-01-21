@@ -1,14 +1,15 @@
 #pragma once
 #ifndef Desenho_H
 #define Desenho_H
-#include "Terreno.h"
-#include "Mapa.h"
-
 #include "Consola.h"
+#include "Terreno.h"
+
+
 #include <iostream>
 #include <vector>
 using namespace std;
 
+class Mapa;
 class Desenho
 {
 	int x;

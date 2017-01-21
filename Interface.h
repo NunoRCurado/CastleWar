@@ -10,8 +10,8 @@
 #include <vector>
 #include <locale> 
 #include "Consola.h"
-using namespace std;
 #include "Desenho.h"
+using namespace std;
 class Colonia;
 class Jogo;
 class Mapa;

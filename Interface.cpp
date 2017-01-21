@@ -67,7 +67,7 @@ bool Interface::verificaComando(int controlo)
 			jogo.setNumeroJogadores(atoi(comObj.getArg2().c_str()));
 			char id = 'A';
 			for (int i = 0; i < jogo.getNumeroJogadores(); i++) {
-				mapa->setColonias(new Colonia(jogo, jogo.getMoedasInicial(), id));
+				mapa->setColonias(new Colonia(jogo, jogo.getMoedasInicial(), id, i+1));
 				d.escreveEmInfo(3 + i);
 				c.setTextColor(mapa->getColonias().at(i)->getCor());
 				cout << "Jogador " << id;
@@ -76,7 +76,7 @@ bool Interface::verificaComando(int controlo)
 			c.setTextColor(7);
 			d.preencheMapa(mapa, 0);
 			d.limpaLinhaProntoAvisos();
-			cout << jogo->getNumeroJogadores() << " jogadores criados";
+			cout << jogo.getNumeroJogadores() << " jogadores criados";
 			return true;
 		}
 	}

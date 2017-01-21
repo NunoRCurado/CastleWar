@@ -1,4 +1,6 @@
 #include "Desenho.h"
+#include "Mapa.h"
+#include "Colonia.h"
 
 
 Desenho::Desenho()
