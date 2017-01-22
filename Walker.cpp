@@ -11,6 +11,7 @@ Walker::~Walker()
 
 void Walker::efeito(Seres * ser, Mapa *mapa)
 {
+	Desenho d;
 	Terreno * terreno = ser->getTerreno();
 	Edificios *edificio = ser->getColonia()->getEdificios().at(0);
 	if (terreno == NULL) {
@@ -52,7 +53,7 @@ void Walker::efeito(Seres * ser, Mapa *mapa)
 		ser->setTerreno((adj->at(posicaoParaMover)));
 		mapa->getTerreno().at(posicaoDoSer)->getTerrenoAdjacentes()->at(posicaoParaMover)->setSeres(ser);
 		ser->setLocalizacao(0);
-
+		d.preencheMapa(mapa, 0);
 		vector <Seres*>  *seresNoCastelo = edificio->getSeres();
 		vector<Seres *>::iterator it;
 		for (it = seresNoCastelo->begin(); it != seresNoCastelo->end(); it++) {

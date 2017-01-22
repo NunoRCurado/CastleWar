@@ -168,7 +168,7 @@ void Desenho::DesenhaMapa(Mapa * mapa, int pos)
 			else
 				if (mapa->getTerreno().at(pos)->getSeres() != NULL) {
 					for (int nCol = 0; nCol < mapa->getColonias().size(); nCol++) {
-						for (int nSer = 0; nSer < mapa->getColonias().at(nCol)->getSeres().size(); nSer++) {
+						for (int nSer = 0; nSer < mapa->getColonias().at(nCol)->getSeres()->size(); nSer++) {
 							if (mapa->getColonias().at(nCol)->getEdificios().at(nSer)->getTerreno()->getPosicao() == pos) {
 								c.setTextColor(mapa->getColonias().at(nCol)->getCor());
 								break;

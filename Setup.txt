@@ -1,6 +1,6 @@
 Dim 20 40
-Moedas 40
-Oponentes 10
+Moedas 4000000
+Oponentes 3
 Next
 Mkperfil a
 addperfil a walker

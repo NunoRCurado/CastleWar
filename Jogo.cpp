@@ -40,6 +40,7 @@ void Jogo::ConfiguraJogoFicheiro() {
 	
 	ifstream ifi("Setup.txt");
 	if (ifi.is_open() == false) {
+		d.limpaLinhaProntoAvisos();
 		cout << "Erro a abrir ficheiro" << endl;
 		return;
 	}
@@ -48,6 +49,7 @@ void Jogo::ConfiguraJogoFicheiro() {
 		itf->setComando(comObj);
 		flag = itf->verificaComando(controlo);
 		if (comObj.getArg1() == "NEXT" && controlo == 3) {
+			d.limpaLinhaProntoAvisos();
 			cout << "Vamos passar a proxima fase de configuracao" << endl;
 			break;
 		}
