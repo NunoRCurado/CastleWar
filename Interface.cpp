@@ -64,7 +64,7 @@ bool Interface::verificaComando(int controlo)
 			return false;
 		}
 		else {
-			jogo.setNumeroJogadores(atoi(comObj.getArg2().c_str()));
+			jogo.setNumeroJogadores(atoi(comObj.getArg2().c_str())+1);
 			char id = 'A';
 			for (int i = 0; i < jogo.getNumeroJogadores(); i++) {
 				mapa->setColonias(new Colonia(jogo, jogo.getMoedasInicial(), id, i+1));
@@ -129,7 +129,7 @@ bool Interface::verificaComandoFase2(int controlo)
 						return false;
 					}
 				}
-				Perfil *p = new Perfil(comObj.getArg2(), 10, 0);
+				Perfil *p = new Perfil(comObj.getArg2(), 10, 0, 0,0,0);
 				jogo.setPerfis(p);
 				return true;
 			}
@@ -176,6 +176,14 @@ bool Interface::verificaComandoInicioJogo()
 		d.limpaLinhaProntoAvisos();
 		cout << "Foco mudado";
 		return false;
+	}
+	if (comObj.getArg1() == "BUILD") {
+		mapa->constroiEdificio(comObj.getArg2(), atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
+		return false;
+	}
+	if (comObj.getArg1() == "NEXT") {
+		mapa->actuamSeres();
+		return true;
 	}
 	return false;
 }

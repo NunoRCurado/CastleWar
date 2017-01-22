@@ -23,13 +23,14 @@ private:
 	string perfil;
 	int localizacao;
 	Terreno *terreno;
+	Colonia *colonia;
 	
 
 	vector <CaracteristicasSeres *> caracteristicasSeres; 
 
 public:
 	Seres(const Seres &ser);
-	Seres(char id, string idPerfil);
+	Seres(char id, string idPerfil, Colonia *colonia);
 	~Seres();
 
 
@@ -57,13 +58,17 @@ public:
 	void setTerreno(Terreno *terreno) { this->terreno = terreno; }
 	Terreno * getTerreno() { return this->terreno; }
 
+	void setColonia(Colonia *colonia) { this->colonia = colonia; }
+	Colonia * getColonia() { return this->colonia; }
+
+
 	void setPerfil(string perfil) { this->perfil = perfil; }
 	string getPerfil() { return this->perfil; }
 
 	void setId(char id) { this->id = id; }
 	char getId() { return this->id; }
 
-	vector <CaracteristicasSeres*> getCaracteristicasSeres() { return this->caracteristicasSeres;}
+	vector <CaracteristicasSeres*> *getCaracteristicasSeres() { return &caracteristicasSeres;}
 	void setCaracteristicasSeres(vector<CaracteristicasSeres*>* caracteristicasSeres);
 
 	Seres *duplica() {

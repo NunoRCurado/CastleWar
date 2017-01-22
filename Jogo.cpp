@@ -191,7 +191,7 @@ void Jogo::InicioJogo()
 	Desenho d;
 	string comando;
 	Comando comObj;
-	bool flag = 0;
+	bool flag = false;
 	int controlo = 0;
 
 	do {
@@ -252,6 +252,7 @@ void Jogo::setPerfilNoVector(string id, string caracteristica){
 					this->perfis.at(i)->setCaracteristicas(armadura);
 					this->perfis.at(i)->setForca(this->perfis.at(i)->getForca() - 3);
 					this->perfis.at(i)->setCusto(this->perfis.at(i)->getCusto() + 2);
+					this->perfis.at(i)->setDefesa(this->perfis.at(i)->getDefesa() + 2);
 					d.limpaLinhaProntoAvisos();
 					cout << "Caracteristica adicionada com sucesso" << endl;
 					break;
@@ -324,6 +325,7 @@ void Jogo::setPerfilNoVector(string id, string caracteristica){
 					this->perfis.at(i)->setCaracteristicas(faca);
 					this->perfis.at(i)->setForca(this->perfis.at(i)->getForca() - 1);
 					this->perfis.at(i)->setCusto(this->perfis.at(i)->getCusto() + 1);
+					this->perfis.at(i)->setAtaque(this->perfis.at(i)->getAtaque() + 1);
 					d.limpaLinhaProntoAvisos();
 					cout << "Caracteristica adicionada com sucesso" << endl;
 					break;
@@ -356,6 +358,7 @@ void Jogo::setPerfilNoVector(string id, string caracteristica){
 					this->perfis.at(i)->setCaracteristicas(peledura);
 					this->perfis.at(i)->setForca(this->perfis.at(i)->getForca() - 2);
 					this->perfis.at(i)->setCusto(this->perfis.at(i)->getCusto() + 2);
+					this->perfis.at(i)->setDefesa(this->perfis.at(i)->getDefesa() + 1);
 					d.limpaLinhaProntoAvisos();
 					cout << "Caracteristica adicionada com sucesso" << endl;
 					break;
@@ -396,6 +399,7 @@ void Jogo::setPerfilNoVector(string id, string caracteristica){
 					this->perfis.at(i)->setCaracteristicas(superior);
 					this->perfis.at(i)->setForca(this->perfis.at(i)->getForca() - 1);
 					this->perfis.at(i)->setCusto(this->perfis.at(i)->getCusto() + 1);
+					this->perfis.at(i)->setSaude(this->perfis.at(i)->getSaude() + 1);
 					d.limpaLinhaProntoAvisos();
 					cout << "Caracteristica adicionada com sucesso" << endl;
 					break;

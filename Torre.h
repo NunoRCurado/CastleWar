@@ -10,6 +10,7 @@
 
 
 using namespace std;
+class Mapa;
 class Terreno;
 class Torre : public Edificios {
 
@@ -17,17 +18,17 @@ class Torre : public Edificios {
 public:
 
 	Torre();
-	Torre(string id, Terreno *terreno);
+	Torre(string id, Terreno *terreno, int edificioId, Colonia *colonia);
 	~Torre();
 
 	Edificios *duplica() {
 		return new Torre(*this);
 	}
 
-	void efeito(Colonia *colonia);
-	void upgrade(Colonia *colonia);
-	void vende(Colonia *colonia); //usar alguma coisa para apagar o edificio?
-	void repara(Colonia *colonia);
+	void efeito(Colonia *coloniaActual, Mapa *mapa);
+	void upgrade(Colonia *colonia, int id);
+	void vende(Colonia *colonia, int id); //usar alguma coisa para apagar o edificio?
+	void repara(Colonia *colonia, int id);
 
 
 };

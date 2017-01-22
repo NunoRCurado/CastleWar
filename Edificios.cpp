@@ -11,7 +11,7 @@ Edificios::Edificios()
 }
 
 
-Edificios::Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno, int numeroUpgrades, int edificioID)
+Edificios::Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno, int numeroUpgrades, int edificioID, Colonia *colonia)
 {
 	this->id = id;
 	this->custo = custo;
@@ -21,6 +21,7 @@ Edificios::Edificios(string id, int custo, int saude, int defesa, int ataque, Te
 	this->ataque = ataque;
 	this->numeroUpgrades = numeroUpgrades;
 	this->edificioID = edificioID;
+	this->colonia = colonia;
 }
 
 Edificios::~Edificios()
