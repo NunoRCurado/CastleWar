@@ -46,9 +46,14 @@ public:
 
 	void addSer(int numeroSeres, string idPerfil);
 
+	
 	Colonia* getColoniaActual() { return this->coloniaActual; }
 	void setColoniaActual() { this->coloniaActual = coloniaActual; }
 
+	void mostraColonia(string idColonia);
+	void mostraPerfil(string perfil);
+
+	bool focoMapa(int linhas, int colunas);
 
 	bool verificaEdificios(int linhas, int colunas, string id, int raio);
 	int converteCoordenadasemPosicao(int linhas, int colunas);
@@ -57,7 +62,8 @@ public:
 
 	void constroiEdificio(string id, int linha, int coluna);
 
-
+	int getXdaPos(int pos);
+	int getYdaPos(int pos);
 	int randomSelector(int valInicial, int valFinal);
 
 };

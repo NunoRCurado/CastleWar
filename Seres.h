@@ -60,8 +60,8 @@ public:
 	void setPerfil(string perfil) { this->perfil = perfil; }
 	string getPerfil() { return this->perfil; }
 
-	void setId(int id) { this->id = id; }
-	int getId() { return this->id; }
+	void setId(char id) { this->id = id; }
+	char getId() { return this->id; }
 
 	vector <CaracteristicasSeres*> getCaracteristicasSeres() { return this->caracteristicasSeres;}
 	void setCaracteristicasSeres(vector<CaracteristicasSeres*>* caracteristicasSeres);

@@ -151,6 +151,7 @@ bool Interface::verificaComandoFase2(int controlo)
 
 bool Interface::verificaComandoInicioJogo()
 {
+	Desenho d;
 	bool flag = false;
 	Mapa *mapa = jogo.getMapa();
 
@@ -160,6 +161,20 @@ bool Interface::verificaComandoInicioJogo()
 	}
 	if (comObj.getArg1() == "SETMOEDAS"){
 		mapa->setMoedasaUmaColonia(comObj.getArg2(), atoi(comObj.getArg3().c_str()));
+		return false;
+	}
+	if (comObj.getArg1() == "LIST") {
+		mapa->mostraColonia(comObj.getArg2());
+		return false;
+	}
+	if (comObj.getArg1() == "LISTP") {
+		mapa->mostraPerfil(comObj.getArg2());
+		return false;
+	}
+	if (comObj.getArg1() == "FOCO") {
+		mapa->focoMapa(atoi(comObj.getArg2().c_str()), atoi(comObj.getArg3().c_str()));
+		d.limpaLinhaProntoAvisos();
+		cout << "Foco mudado";
 		return false;
 	}
 	return false;

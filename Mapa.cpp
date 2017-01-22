@@ -143,6 +143,7 @@ void Mapa::setColonias(Colonia * colonia)
 
 void Mapa::addSer(int numeroSeres, string idPerfil)
 {
+	Desenho d;
 	int custoParaFazerSeresTotal = 0;
 	bool flag = false;
 	vector <CaracteristicasSeres*> * aux = NULL;
@@ -158,10 +159,181 @@ void Mapa::addSer(int numeroSeres, string idPerfil)
 			coloniaActual->getEdificios().at(0)->colocaSeres(ser);
 			coloniaActual->setSeres(ser);
 		}
+		d.limpaLinhaProntoAvisos();
 		cout << "Foram criados " << numeroSeres << " com sucesso"<<endl;
 	}
 	else {
+		d.limpaLinhaProntoAvisos();
 		cout << "nao ha dinheiro" << endl;
+	}
+}
+
+void Mapa::mostraColonia(string idColonia)
+{
+	Desenho d;
+	Colonia *aux;
+	int l = 4;
+	for (int c = 0; c < jogo.getMapa()->colonias.size(); c++) {
+		if (jogo.getMapa()->colonias.at(c)->getId() == idColonia[0]) {
+			aux = jogo.getMapa()->colonias.at(c);
+			break;
+		}
+	}
+	d.limpaLinhaInfo();
+	d.escreveEmInfo(3);
+	cout << "Colonia " << idColonia;
+	
+	for (int i = 0 ; i < aux->getEdificios().size(); i++) {
+		d.escreveEmInfo(l);
+		cout << "Id " << aux->getEdificios().at(i)->getId()
+			<< " Sa " << aux->getEdificios().at(i)->getSaude()
+			<< " De " << aux->getEdificios().at(i)->getDefesa()
+			<< " At " << aux->getEdificios().at(i)->getAtaque()
+			<< " Up " << aux->getEdificios().at(i)->getNumeroUpgrades()
+			<< " Li " << aux->getEdificios().at(i)->getTerreno()->getLinha()
+			<< " Co " << aux->getEdificios().at(i)->getTerreno()->getColuna();
+		l++;
+	}
+	for (int y = 0; y < aux->getSeres().size(); y++) {
+		d.escreveEmInfo(l);
+		cout << "Id " << aux->getSeres().at(y)->getId()
+			<< " Sa " << aux->getSeres().at(y)->getSaude()
+			<< " De " << aux->getSeres().at(y)->getDefesa()
+			<< " At " << aux->getSeres().at(y)->getAtaque()
+			<< " Pe " << aux->getSeres().at(y)->getPerfil();
+		//	<< " Li " << aux->getSeres().at(y)->getTerreno()->getLinha()
+		//	<< " Co " << aux->getSeres().at(y)->getTerreno()->getColuna();
+		l++;
+	}
+}
+
+void Mapa::mostraPerfil(string idperfil)
+{
+	/*Desenho d;
+	Perfil *aux;
+	int l = 4;
+	for (int c = 0; c < jogo.getPerfis().size(); c++) {	
+		if (jogo.getPerfis().at(c)->getID == idperfil[0]) {
+			aux = jogo.getPerfis().at(c);
+			break;
+		}
+	}
+	d.limpaLinhaInfo();
+	d.escreveEmInfo(3);
+	cout << "Perfil " << idperfil;
+
+	for (int i = 0; i < aux->getCaracteristicas()->size(); i++) {
+		d.escreveEmInfo(l);
+		cout << "No " << aux->getCaracteristicas()->at(i)->getNome();
+		l++;
+	}
+	*/
+}
+
+
+bool Mapa::focoMapa(int linhas, int colunas) 
+{
+	Desenho d;
+	vector<int> pos;
+	int pos_vector = 0;
+	if (linhas <= 10 && colunas <= 20) {  // caso minimo  funciona
+		for (int y = 0; y < 20; y++) {
+			for (int x = 0; x < 40; x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
+	}
+	else if(linhas <= 10){//caso linhas menor que 10 funciona
+		for (int y = 0; y < 20; y++) {
+			for (int x = colunas - 20; x < colunas + 20; x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
+	}
+	else if (colunas <= 20) {//caso coluna menor que 20 rebenta
+		for (int y = linhas - 10; y < linhas + 10; y++) {
+			for (int x = 0; x < 40; x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
+	}
+	else if (linhas >= this->getNumeroLinha() - 20 && colunas >= this->getNumeroColuna() - 40) { // caso maximo funciona
+		for (int y = this->getNumeroLinha() - 20; y < this->getNumeroLinha(); y++) {
+			for (int x = this->getNumeroColuna() - 40; x < this->getNumeroColuna(); x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
+	}
+	else if(linhas >= this->getNumeroLinha() - 20){ // caso as linhas excedam o mapa
+		for (int y = this->getNumeroLinha() - 20; y < this->getNumeroLinha(); y++) {
+			for (int x = colunas - 20; x < colunas + 20; x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
+	}
+	else if (colunas >= this->getNumeroColuna() - 40) { // caso as colunas excedam o mapa
+		for (int y = linhas - 10; y < linhas + 10; y++) {//isto esta mal
+			for (int x = this->getNumeroColuna() - 40; x < this->getNumeroColuna(); x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
+	}
+	else // caso normal
+	{
+		for (int y = linhas - 10; y < linhas + 10; y++) {
+			for (int x = colunas - 20; x < colunas + 20; x++) {
+				for (Terreno *p : terrenos) {
+					if (p->getColuna() == x && p->getLinha() == y) {
+						pos_vector = this->converteCoordenadasemPosicao(y, x);
+						pos.push_back(pos_vector);
+					}
+				}
+			}
+		}
+		d.pintaMapa(this, pos);
+		return true;
 	}
 }
 
@@ -198,8 +370,8 @@ bool Mapa::verificaEdificios(int linhas, int colunas, string id, int raio)
 
 	int posicaoInicio = converteCoordenadasemPosicao(Lmin, Cmin);
 
-	int colunaCalculo = raio*2 + verificaCmin - verificaCmax -1;
-	int linhaCalculo =  raio*2 + verificaLmin - verificaLmax -1;
+	int colunaCalculo = raio*2 + verificaCmin - verificaCmax - 1;
+	int linhaCalculo =  raio*2 + verificaLmin - verificaLmax - 1;
 
 	for (int i = 0; i < colunaCalculo; i++) {
 		for (int j = 0; j < linhaCalculo; j++) {
@@ -226,14 +398,9 @@ bool Mapa::verificaEdificios(int linhas, int colunas, string id, int raio)
 
 int Mapa::converteCoordenadasemPosicao(int linhas, int colunas)
 {
-	if (linhas == 0) {
-		linhas = 1;
-	}
-	if (colunas == 0) {
-		colunas = 1;
-	}
+	
 	int posicao = 0;
-	posicao = (this->numeroColuna * (linhas - 1)) + (colunas - 1);
+	posicao = (this->numeroColuna * linhas) + colunas;
 	return posicao;
 }
 

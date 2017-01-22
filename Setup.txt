@@ -1,6 +1,6 @@
 Dim 20 40
 Moedas 40
-Oponentes 2
+Oponentes 10
 Next
 Mkperfil a
 Mkperfil b

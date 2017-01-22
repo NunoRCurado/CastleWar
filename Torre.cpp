@@ -6,7 +6,7 @@ Torre::Torre()
 }
 
 
-Torre::Torre(string id, Terreno *terreno) : Edificios (id, 20,20,10, 3, terreno,0)
+Torre::Torre(string id, Terreno *terreno) : Edificios (id, 20,20,10, 3, terreno,0, 0)
 {
 }
 
