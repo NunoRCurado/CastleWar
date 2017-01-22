@@ -47,6 +47,8 @@ void Walker::efeito(Seres * ser, Mapa *mapa)
 			}
 		}
 
+	
+
 	} while (adj->at(posicaoParaMover)->getSeres() != NULL && adj->at(posicaoParaMover)->getEdificios() != NULL);
 
 		mapa->getTerreno().at(posicaoDoSer)->setSeres(NULL);
