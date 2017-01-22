@@ -339,7 +339,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Col
 		for (int j = 0; j < linhaCalculo; j++) {
 			int x = (posicaoInicio + i) + this->numeroColuna*j;
 			if (this->terrenos.at(x)->getPosicao() == posicaoDoCastelo) {
-				Torre *torre = new Torre("TORRE", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual);
+				Torre *torre = new Torre("T", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual);
 				double dinheiroColonia = coloniaActual->getMoedas();
 				if (torre->getCusto() <= dinheiroColonia) {
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - torre->getCusto());
@@ -403,7 +403,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 		for (int j = 0; j < linhaCalculo; j++) {
 			int x = (posicaoInicio + i) + this->numeroColuna*j;
 			if (this->terrenos.at(x)->getPosicao() == posicaoDoCastelo) {
-				Quinta *quinta = new Quinta("Quinta", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual);
+				Quinta *quinta = new Quinta("Q", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual);
 				double dinheiroColonia = coloniaActual->getMoedas();
 				if (quinta->getCusto() <= dinheiroColonia) {
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - quinta->getCusto());
