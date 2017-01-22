@@ -6,7 +6,7 @@ Castelo::Castelo()
 {
 }
 
-Castelo::Castelo(string id, Terreno *terreno) : Edificios(id, 0, 50, 10, 0, terreno, 0, 0)
+Castelo::Castelo(string id, Terreno *terreno) : Edificios(id, 0, 50, 10, 0, terreno, 0, 0, NULL)
 {
 	
 }
@@ -20,9 +20,9 @@ void Castelo::colocaSeres(Seres * ser)
 	this->seresNoCastelo.push_back(ser);
 }
 
-void Castelo::repara(Colonia * colonia)
+void Castelo::repara(Colonia * colonia, int id)
 {
-	if (this->getSaude() <= 0) { // ver o cenas do gotoyx;
+	if (this->getSaude() <= 0) { 
 		cout << "Edificio impossivel de reparar devido a ter sustido danos irreversiveis";
 	}
 	else {
@@ -42,14 +42,14 @@ void Castelo::repara(Colonia * colonia)
 
 }
 
-void Castelo::efeito(Colonia * colonia)
+void Castelo::efeito(Colonia * colonia, Mapa *mapa)
 {
 }
 
-void Castelo::upgrade(Colonia * colonia)
+void Castelo::upgrade(Colonia * colonia, int id)
 {
 }
 
-void Castelo::vende(Colonia * colonia)
+void Castelo::vende(Colonia * colonia, int id)
 {
 }

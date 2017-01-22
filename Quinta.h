@@ -16,7 +16,7 @@ class Quinta : public Edificios {
 public:
 
 	Quinta();
-	Quinta(string id, Terreno *terreno, int edificioId);
+	Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia);
 	~Quinta();
 
 
@@ -24,10 +24,10 @@ public:
 		return new Quinta(*this);
 	}
 
-	void efeito(Colonia *colonia);
-	void upgrade(Colonia *colonia);
-	void vende(Colonia *colonia); //usar alguma coisa para apagar o edificio?
-	void repara(Colonia *colonia);
+	void efeito(Colonia *coloniaActual, Mapa *mapa);
+	void upgrade(Colonia *colonia, int id);
+	void vende(Colonia *colonia, int id); //usar alguma coisa para apagar o edificio?
+	void repara(Colonia *colonia, int id);
 
 };
 

@@ -3,6 +3,7 @@ Moedas 40
 Oponentes 2
 Next
 Mkperfil a
+addperfil a walker
 Mkperfil b
 Mkperfil c
 Mkperfil d

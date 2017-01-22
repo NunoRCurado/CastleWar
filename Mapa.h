@@ -59,6 +59,8 @@ public:
 	bool verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Colonia *coloniaActual, int raio);
 	bool verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia *coloniaActual, int raio);
 
+	void actuamSeres();
+
 	int randomSelector(int valInicial, int valFinal);
 
 };

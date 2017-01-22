@@ -2,13 +2,14 @@
 #include "Terreno.h"
 #include "Colonia.h"
 #include "Edificios.h"
+#include "Mapa.h"
 
 Quinta::Quinta()
 {
 }
 
 
-Quinta::Quinta(string id, Terreno *terreno, int edificioId) : Edificios (id, 30, 20, 10, 0, terreno, 0, 0)
+Quinta::Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia) : Edificios (id, 30, 20, 10, 0, terreno, 0, 0, colonia)
 {
 }
 
@@ -16,12 +17,12 @@ Quinta::~Quinta()
 {
 }
 
-void Quinta::efeito(Colonia * colonia)
+void Quinta::efeito(Colonia * coloniaActual, Mapa *mapa)
 {
-	colonia->setMoedas(colonia->getMoedas() + 2 + this->getNumeroUpgrades());
+	coloniaActual->setMoedas(coloniaActual->getMoedas() + 2 + this->getNumeroUpgrades());
 }
 
-void Quinta::upgrade(Colonia * colonia)
+void Quinta::upgrade(Colonia * colonia, int id)
 {
 	if (colonia->getMoedas() >= 10) {
 		this->setDefesa(this->getDefesa() + 1);
@@ -34,13 +35,18 @@ void Quinta::upgrade(Colonia * colonia)
 	}
 }
 
-void Quinta::vende(Colonia * colonia)
+void Quinta::vende(Colonia * colonia, int id)
 {
-	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5))); //utilizo aquele get?
+	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5)));
 	delete this->getTerreno()->getEdificios();
+	for (int i = 0; i < colonia->getEdificios().size(); i++) {
+		if (colonia->getEdificios().at(i)->getEdificioID() == id) {
+			delete colonia->getEdificios().at(i);
+		}
+	}
 }
 
-void Quinta::repara(Colonia * colonia)
+void Quinta::repara(Colonia * colonia, int id)
 {
 	if (this->getSaude() <= 0) {
 		cout << "Edificio impossivel de reparar devido a ter sustido danos irreversiveis";

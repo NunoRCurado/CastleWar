@@ -9,6 +9,7 @@
 
 
 using namespace std;
+class Mapa;
 class Terreno;
 class Colonia;
 class Castelo : public Edificios {
@@ -28,10 +29,10 @@ public:
 		return new Castelo(*this); //erro se a classe edificios for abstracta?
 	}
 
-	void repara(Colonia *colonia);
-	void efeito(Colonia *colonia);
-	void upgrade(Colonia *colonia);
-	void vende(Colonia *colonia);
+	void repara(Colonia *colonia, int id);
+	void efeito(Colonia *colonia, Mapa *mapa);
+	void upgrade(Colonia *colonia, int id);
+	void vende(Colonia *colonia, int id);
 };
 
 

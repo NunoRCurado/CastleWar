@@ -7,6 +7,7 @@
 #include "Seres.h"
 
 using namespace std;
+class Mapa;
 class Terreno;
 class Colonia;
 class Seres;
@@ -20,13 +21,15 @@ private:
 	int ataque;
 	int edificioID;
 	Terreno *terreno; 
+	Colonia *colonia;
 	int numeroUpgrades;
+	
 
 public:
 
 	Edificios(const Edificios &edificio); 
 	Edificios();
-	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades, int edificioID);
+	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades, int edificioID, Colonia *colonia);
 	~Edificios();
 
 
@@ -49,7 +52,7 @@ public:
 	virtual int getDefesa() { return this->defesa; }
 
 	virtual void setTerreno(Terreno *terreno) { this->terreno = terreno; }
-	virtual Terreno * getTerreno() { return this->terreno; }
+	virtual Terreno *getTerreno() { return this->terreno; }
 
 	virtual void setNumeroUpgrades(int numeroUpgrades) { this->numeroUpgrades = numeroUpgrades; }
 	virtual int getNumeroUpgrades() { return this->numeroUpgrades; }
@@ -57,12 +60,14 @@ public:
 	virtual void setAtaque(int ataque) { this->ataque = ataque; }
 	virtual int getAtaque() { return this->ataque; }
 
+	virtual void setColonia(Colonia *Colonia) { this->colonia = colonia; }
+	virtual Colonia *getColonia() { return this->colonia; }
 
 	virtual Edificios *duplica() = 0;
-	virtual void efeito(Colonia *colonia) = 0;
-	virtual void repara(Colonia *colonia) = 0;
-	virtual void upgrade(Colonia *colonia) = 0;
-	virtual void vende(Colonia *colonia) = 0;
+	virtual void efeito(Colonia *coloniaActual, Mapa *mapa) = 0;
+	virtual void repara(Colonia *colonia, int id) = 0;
+	virtual void upgrade(Colonia *colonia, int id) = 0;
+	virtual void vende(Colonia *colonia, int id) = 0;
 
 
 	//constructor por copia
@@ -80,6 +85,7 @@ public:
 		this->ataque = x.ataque;
 		this->numeroUpgrades;
 		this->edificioID = x.edificioID;
+		this->colonia = x.colonia;
 
 		return *this;
 	}

@@ -4,11 +4,14 @@ Perfil::Perfil()
 {
 }
 
-Perfil::Perfil(string id, int forca, int custo)
+Perfil::Perfil(string id, int forca, int custo, int saude, int ataque, int defesa)
 {
 	this->id = id;
 	this->forca = forca;
 	this->custo = custo;
+	this->saude = saude;
+	this->ataque = ataque;
+	this->defesa = defesa;
 }
 
 Perfil::~Perfil()

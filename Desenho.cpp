@@ -158,8 +158,8 @@ void Desenho::preencheMapa(Mapa *mapa, int inicio)
 			}
 			else if (mapa->getTerreno().at(inicio)->getSeres() != NULL) {
 				for (nCol = 0; nCol < mapa->getColonias().size(); nCol++) {
-					for (nEdi = 0; nEdi < mapa->getColonias().at(nCol)->getEdificios().size(); nEdi++) {
-						if (mapa->getColonias().at(nCol)->getSeres().at(nEdi)->getTerreno()->getPosicao() == inicio) {
+					for (nEdi = 0; nEdi < mapa->getColonias().at(nCol)->getSeres()->size(); nEdi++) {
+						if (mapa->getColonias().at(nCol)->getSeres()->at(nEdi)->getTerreno()->getPosicao() == inicio) {
 							c.setTextColor(mapa->getColonias().at(nCol)->getCor());
 							break;
 						}

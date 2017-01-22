@@ -7,17 +7,18 @@ Seres::Seres(const Seres & ser)//ver para que serve
 }
 
 
-Seres::Seres(char id, string idPerfil)
+Seres::Seres(char id, string idPerfil, Colonia *colonia)
 {
 	this->id = id;
 	this->perfil = idPerfil;
-	this->terreno = terreno;
+	this->terreno = NULL;
 	this->ataque = 0;
 	this->defesa = 0;
 	this->forca = 10;
 	this->saude = 10;
 	this->velocidade = 0;
 	this->localizacao = 1; // loc do castelo
+	this->colonia = colonia;
 }
 
 Seres::~Seres()
