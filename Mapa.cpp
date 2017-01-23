@@ -648,6 +648,36 @@ void Mapa::upgradeEdificio(int id)
 	}
 }
 
+void Mapa::verificaMortos()
+{
+	int totalColonias = getColonias().size();
+	vector <Seres *> *seresColonia;
+	vector <CaracteristicasSeres*> *caracteristicas;
+	int posicaoMapa;
+
+	for (int i = 0; i < totalColonias; i++) {
+		seresColonia = getColonias().at(i)->getSeres();
+		for (int k = 0; k < seresColonia->size(); k++) {
+			if (seresColonia->at(k)->getSaude() <= 0) {
+				posicaoMapa = seresColonia->at(k)->getTerreno()->getPosicao();
+				terrenos.at(posicaoMapa)->setSeres(NULL);
+				caracteristicas = seresColonia->at(k)->getCaracteristicasSeres();
+				for (int j = 0; caracteristicas->size(); j++) {
+					if (caracteristicas->at(j)->getNome() == "SECONDCHANCE") {
+						caracteristicas->at(j)->efeito(seresColonia->at(k), NULL);
+					}
+					else {
+
+					}
+					 
+				}
+
+			}
+		}
+
+	}
+}
+
 void Mapa::controlaCicloColonias(int turnos)
 {
 	int tamanhoColonias = getColonias().size();
@@ -679,50 +709,51 @@ void Mapa::ComandosDoPC()
 	int dinheiro = coloniaActual->getMoedas();
 	int valorRandom = randomSelector(0, 3);
 	
-	switch (valorRandom) {
+	if (coloniaActual->getFlagAge() == 1) {
+		switch (valorRandom) {
 
-	case 0:
-		if (dinheiro > 100) {
-			int perfil = randomSelector(0, 4);
-			string id;
-			switch (perfil) {
-			case 0:
-				id = jogo.getPerfis().at(perfil)->getID();
-				addSer(2, id);
-				break;
-			case 1:
-				id = jogo.getPerfis().at(perfil)->getID();
-				addSer(1, id);
-			case 2:
-				id = jogo.getPerfis().at(perfil)->getID();
-				addSer(2, id);
-			case 3:
-				id = jogo.getPerfis().at(perfil)->getID();
-				addSer(3, id);
-			case 4:
-				id = jogo.getPerfis().at(perfil)->getID();
-				addSer(1, id);
-			default:
-				break;
+		case 0:
+			if (dinheiro > 100) {
+				int perfil = randomSelector(0, 4);
+				string id;
+				switch (perfil) {
+				case 0:
+					id = jogo.getPerfis().at(perfil)->getID();
+					addSer(2, id);
+					break;
+				case 1:
+					id = jogo.getPerfis().at(perfil)->getID();
+					addSer(1, id);
+				case 2:
+					id = jogo.getPerfis().at(perfil)->getID();
+					addSer(2, id);
+				case 3:
+					id = jogo.getPerfis().at(perfil)->getID();
+					addSer(3, id);
+				case 4:
+					id = jogo.getPerfis().at(perfil)->getID();
+					addSer(1, id);
+				default:
+					break;
+				}
 			}
+			break;
+		case 1:
+
+			//if (dinheiro > 150) {
+			//	//inserir construcao de edificios?
+			//	int posicaoAdj = 0;
+			//	Terreno *terreno = coloniaActual->getEdificios().at(0)->getTerreno();
+			//	vector <Terreno*> *adj = terreno->getTerrenoAdjacentes();
+
+			//}
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
 		}
-		break;
-	case 1:
-
-		//if (dinheiro > 150) {
-		//	//inserir construcao de edificios?
-		//	int posicaoAdj = 0;
-		//	Terreno *terreno = coloniaActual->getEdificios().at(0)->getTerreno();
-		//	vector <Terreno*> *adj = terreno->getTerrenoAdjacentes();
-
-		//}
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
 	}
-	coloniaActual->setFlagAge(1);
 	actuamSeres();
 }
 
