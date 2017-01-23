@@ -53,7 +53,7 @@ public:
 
 	
 	Colonia* getColoniaActual() { return this->coloniaActual; }
-	void setColoniaActual() { this->coloniaActual = coloniaActual; }
+	void setColoniaActual(Colonia *coloniaActual) { this->coloniaActual = coloniaActual; }
 
 	void mostraColonia(string idColonia);
 	void mostraPerfil(string perfil);
@@ -71,6 +71,8 @@ public:
 
 	void vendeEdificio(int id);
 
+	void controlaCicloColonias(int turnos);
+	void ComandosDoPC();
 	void upgradeEdificio(int id);
 
 	void actuamSeres();

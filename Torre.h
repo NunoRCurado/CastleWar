@@ -18,7 +18,7 @@ class Torre : public Edificios {
 public:
 
 	Torre();
-	Torre(string id, Terreno *terreno, int edificioId, Colonia *colonia);
+	Torre(string id, Terreno *terreno, int edificioId, Colonia *colonia, char idColonia);
 	~Torre();
 
 	Edificios *duplica() {

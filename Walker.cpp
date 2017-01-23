@@ -55,6 +55,7 @@ void Walker::efeito(Seres * ser, Mapa *mapa)
 		
 		vector <Seres*>  *seresNoCastelo = edificio->getSeres();
 		vector<Seres *>::iterator it;
+		
 		for (it = seresNoCastelo->begin(); it != seresNoCastelo->end(); it++) {
 			if (ser->getLocalizacao()==0) {
 				it = seresNoCastelo->erase(it);

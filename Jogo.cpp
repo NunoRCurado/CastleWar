@@ -1,4 +1,6 @@
 #include "Jogo.h"
+#include "Mapa.h"
+#include "Colonia.h"
 #include "Comando.h"
 #include "Interface.h"
 #include "Agressao.h"
@@ -194,15 +196,24 @@ void Jogo::InicioJogo()
 	string comando;
 	Comando comObj;
 	bool flag = false;
+	int numeroTicks = 0;
 	int controlo = 0;
+	mapa->focoMapa(0, 0);
 
-	do {
-		d.limpaLinhaProntoComandos();
-		getline(cin, comando);
-		comObj = comObj.separaComando(comando, comObj);
-		itf->setComando(comObj);
-		flag = itf->verificaComandoInicioJogo();
-	} while (controlo != 6);//adicionar aqui saida ou outro pc
+	Colonia *coloniaActual = mapa->getColoniaActual();
+
+	if (coloniaActual == mapa->getColonias().at(0))
+	{
+		do {
+			d.limpaLinhaProntoComandos();
+			getline(cin, comando);
+			comObj = comObj.separaComando(comando, comObj);
+			itf->setComando(comObj);
+			flag = itf->verificaComandoInicioJogo();
+		} while (controlo != 6);
+	}
+		
+	
 }
 
 void Jogo::setPerfis(Perfil * perfil)
@@ -507,4 +518,5 @@ Perfil * Jogo::apanhaPerfilPeloId(string id)
 	return NULL;
 	
 }
+
 

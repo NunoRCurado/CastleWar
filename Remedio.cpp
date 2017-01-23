@@ -2,7 +2,7 @@
 
 Remedio::Remedio() : CaracteristicasSeres(12,2,1,true,"REMEDIO")
 {
-	this->flag = 0;
+	/*this->flag = 0;*/
 }
 
 Remedio::~Remedio()

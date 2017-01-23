@@ -119,13 +119,12 @@ void Mapa::setColonias(Colonia * colonia)
 	if (this->colonias.size() == 0)
 	{
 		int posicao = randomSelector(0, (getNumeroColuna() * getNumeroLinha())-1);
-		Castelo *castelo = new Castelo("C", getTerreno().at(posicao));
+		Castelo *castelo = new Castelo("C", getTerreno().at(posicao), 'a');
 		colonia->setEdificios(castelo);
 		this->colonias.push_back(colonia);
 		this->terrenos.at(posicao)->setEdificios(castelo);
 		coloniaActual = this->colonias.at(0);
-		//inserir random e depois inserir castelo no random
-		//meter mapa d.preencheMapa(, 0);
+		setColoniaActual(coloniaActual);
 	}
 	else {
 		//verificar as 10 casas a volta? 
@@ -138,7 +137,7 @@ void Mapa::setColonias(Colonia * colonia)
 			flag = verificaEdificios(linha, coluna, "", 10);
 			if (flag == true) {
 				 int posicao = converteCoordenadasemPosicao(linha, coluna);
-				 Castelo *castelo = new Castelo("C", getTerreno().at(posicao)); //verificar isto pode rebentar
+				 Castelo *castelo = new Castelo("C", getTerreno().at(posicao), colonia->getId()); //verificar isto pode rebentar
 				 colonia->setEdificios(castelo);
 				 this->colonias.push_back(colonia);
 				 this->terrenos.at(posicao)->setEdificios(castelo);
@@ -523,7 +522,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Col
 		for (int j = 0; j < linhaCalculo; j++) {
 			int x = (posicaoInicio + i) + this->numeroColuna*j;
 			if (this->terrenos.at(x)->getPosicao() == posicaoDoCastelo) {
-				Torre *torre = new Torre("T", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual);
+				Torre *torre = new Torre("T", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual, coloniaActual->getId());
 				double dinheiroColonia = coloniaActual->getMoedas();
 				if (torre->getCusto() <= dinheiroColonia) {
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - torre->getCusto());
@@ -593,7 +592,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 		for (int j = 0; j < linhaCalculo; j++) {
 			int x = (posicaoInicio + i) + this->numeroColuna*j;
 			if (this->terrenos.at(x)->getPosicao() == posicaoDoCastelo) {
-				Quinta *quinta = new Quinta("Q", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual);
+				Quinta *quinta = new Quinta("Q", terrenos.at(posicaoDoEdificio), edificioID, coloniaActual, coloniaActual->getId());
 				double dinheiroColonia = coloniaActual->getMoedas();
 				if (quinta->getCusto() <= dinheiroColonia) {
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - quinta->getCusto());
@@ -649,18 +648,104 @@ void Mapa::upgradeEdificio(int id)
 	}
 }
 
+void Mapa::controlaCicloColonias(int turnos)
+{
+	int tamanhoColonias = getColonias().size();
+	int i = 0;
+	for (int k = 0; k < turnos; k++) {
+		i = 0;
+		for (i = 0; i < tamanhoColonias; i++) {
+			coloniaActual = getColonias().at(i);
+			setColoniaActual(coloniaActual);
+			if (i==0) {
+				if (coloniaActual->getFlagAge() == 1) {
+					actuamSeres();
+				}
+			}
+			else {
+				ComandosDoPC();
+				if (i == tamanhoColonias - 1) {
+					setColoniaActual(getColonias().at(0));
+				}
+			}
+		}
+	}
+	
+}
+
+void Mapa::ComandosDoPC()
+{
+	
+	int dinheiro = coloniaActual->getMoedas();
+	int valorRandom = randomSelector(0, 3);
+	
+	switch (valorRandom) {
+
+	case 0:
+		if (dinheiro > 100) {
+			int perfil = randomSelector(0, 4);
+			string id;
+			switch (perfil) {
+			case 0:
+				id = jogo.getPerfis().at(perfil)->getID();
+				addSer(2, id);
+				break;
+			case 1:
+				id = jogo.getPerfis().at(perfil)->getID();
+				addSer(1, id);
+			case 2:
+				id = jogo.getPerfis().at(perfil)->getID();
+				addSer(2, id);
+			case 3:
+				id = jogo.getPerfis().at(perfil)->getID();
+				addSer(3, id);
+			case 4:
+				id = jogo.getPerfis().at(perfil)->getID();
+				addSer(1, id);
+			default:
+				break;
+			}
+		}
+		break;
+	case 1:
+
+		//if (dinheiro > 150) {
+		//	//inserir construcao de edificios?
+		//	int posicaoAdj = 0;
+		//	Terreno *terreno = coloniaActual->getEdificios().at(0)->getTerreno();
+		//	vector <Terreno*> *adj = terreno->getTerrenoAdjacentes();
+
+		//}
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	}
+	coloniaActual->setFlagAge(1);
+	actuamSeres();
+}
+
 void Mapa::actuamSeres()
 {
 	Desenho d;
 	vector <Seres*> *seres = coloniaActual->getSeres();
 	int n = seres->size();
-
-	for (auto ser : *seres) {
-		for (auto car : *ser->getCaracteristicasSeres() ) {
-			car->efeito(ser, this);
+	if (coloniaActual->getFlagAge() == 1){
+		for (auto ser : *seres) {
+			for (auto car : *ser->getCaracteristicasSeres()) {
+				car->efeito(ser, this);
+			}
 		}
 	}
-	d.pintaMapa(this, this->getPos_foco());
+
+	else {
+		d.limpaLinhaProntoAvisos();
+		cout << "Seres estao em modo pacifico" << endl;
+	}
+	
+		
+	
 }
 
 int Mapa::randomSelector(int valInicial, int valFinal)
