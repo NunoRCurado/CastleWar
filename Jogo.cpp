@@ -197,6 +197,8 @@ void Jogo::InicioJogo()
 	Comando comObj;
 	bool flag = false;
 	int numeroTicks = 0;
+	int controlo = 0;
+	mapa->focoMapa(0, 0);
 
 	Colonia *coloniaActual = mapa->getColoniaActual();
 
@@ -208,7 +210,7 @@ void Jogo::InicioJogo()
 			comObj = comObj.separaComando(comando, comObj);
 			itf->setComando(comObj);
 			flag = itf->verificaComandoInicioJogo();
-		} while (flag == true);
+		} while (controlo != 6);
 	}
 		
 	

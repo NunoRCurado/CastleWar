@@ -10,5 +10,5 @@ Armadura::~Armadura()
 
 void Armadura::efeito(Seres * ser, Mapa *mapa)
 {
-	ser->setDefesa(ser->getDefesa() + 1);
+
 }

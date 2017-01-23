@@ -18,7 +18,7 @@ private:
 	Jogo &jogo;
 	vector <Seres *> seres;
 	vector <Edificios *> edificios;
-	int flagAge = 0;
+	int flagAge;
 
 public:
 

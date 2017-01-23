@@ -23,15 +23,18 @@ private:
 	Terreno *terreno; 
 	Colonia *colonia;
 	int numeroUpgrades;
+	char idColonia;
 	
 
 public:
 
 	Edificios(const Edificios &edificio); 
 	Edificios();
-	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades, int edificioID, Colonia *colonia);
+	Edificios(string id, int custo, int saude, int defesa, int ataque, Terreno *terreno,int numeroUpgrades, int edificioID, Colonia *colonia, char idColonia);
 	~Edificios();
 
+	virtual char getIdColonia() { return this->idColonia; }
+	virtual void setIdColonia() { this->idColonia = idColonia; }
 
 	virtual vector<Seres*> *getSeres() { return NULL; }
 	virtual void colocaSeres(Seres *ser){}

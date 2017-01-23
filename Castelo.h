@@ -19,7 +19,7 @@ private:
 public:
 
 	Castelo();
-	Castelo(string id, Terreno *terreno);
+	Castelo(string id, Terreno *terreno, char idColonia);
 	~Castelo();
 
 	vector <Seres*> *getSeres() { return &seresNoCastelo; }

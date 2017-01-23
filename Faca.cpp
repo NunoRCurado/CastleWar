@@ -10,5 +10,5 @@ Faca::~Faca()
 
 void Faca::efeito(Seres * ser, Mapa *mapa)
 {
-	ser->setAtaque(ser->getAtaque() + 1);
+	
 }

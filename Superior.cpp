@@ -10,5 +10,5 @@ Superior::~Superior()
 
 void Superior::efeito(Seres * ser, Mapa *mapa)
 {
-	ser->setSaude(ser->getSaude() + 1);
+	
 }

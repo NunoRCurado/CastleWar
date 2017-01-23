@@ -57,7 +57,7 @@ void Walker::efeito(Seres * ser, Mapa *mapa)
 		ser->setLocalizacao(0);
 		vector <Seres*>  *seresNoCastelo = edificio->getSeres();
 		vector<Seres *>::iterator it;
-		//d.pintaMapa(mapa, mapa->getPos_foco());
+		
 		for (it = seresNoCastelo->begin(); it != seresNoCastelo->end(); it++) {
 			if (ser->getLocalizacao()==0) {
 				it = seresNoCastelo->erase(it);

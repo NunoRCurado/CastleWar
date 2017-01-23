@@ -70,6 +70,7 @@ public:
 	bool verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia *coloniaActual, int raio);
 
 	void controlaCicloColonias(int turnos);
+	void ComandosDoPC();
 	void actuamSeres();
 	int getXdaPos(int pos);
 	int getYdaPos(int pos);

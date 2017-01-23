@@ -7,7 +7,7 @@ Torre::Torre()
 }
 
 
-Torre::Torre(string id, Terreno *terreno, int edificioId, Colonia *colonia) : Edificios (id, 20,20,10, 3,terreno,0, 0, colonia)
+Torre::Torre(string id, Terreno *terreno, int edificioId, Colonia *colonia, char idColonia) : Edificios (id, 20,20,10, 3,terreno,0, 0, colonia, idColonia)
 {
 }
 

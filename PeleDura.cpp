@@ -10,5 +10,5 @@ PeleDura::~PeleDura()
 
 void PeleDura::efeito(Seres * ser, Mapa *mapa)
 {
-	ser->setDefesa(ser->getDefesa() + 1);
+	
 }
