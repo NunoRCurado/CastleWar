@@ -96,9 +96,9 @@ bool Interface::verificaComando(int controlo)
 				int y = mapa->converteCoordenadasemPosicao(atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
 				for(int i = 0; i< mapa->getColonias().size();i++)
 					if (mapa->getColonias().at(i)->getId() == comObj.getArg2()[0]) {
-						int x = mapa->getColonias().at(i)->getEdificios().at(0)->getTerreno()->getPosicao();
+						int x = mapa->getColonias().at(i)->getEdificios()->at(0)->getTerreno()->getPosicao();
 						mapa->getTerreno().at(x)->getEdificios()->setTerreno(mapa->getTerreno().at(y));
-						mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios().at(0));
+						mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios()->at(0));
 						mapa->getTerreno().at(x)->setEdificios(NULL);
 						mapa->focoMapa(0, 0);
 						d.limpaLinhaProntoAvisos();
@@ -179,6 +179,10 @@ bool Interface::verificaComandoInicioJogo()
 	}
 	if (comObj.getArg1() == "BUILD") {
 		mapa->constroiEdificio(comObj.getArg2(), atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
+		return false;
+	}
+	if (comObj.getArg1() == "SELL") {
+		mapa->vendeEdificio(atoi(comObj.getArg2().c_str()));
 		return false;
 	}
 	if (comObj.getArg1() == "NEXT") {

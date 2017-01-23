@@ -168,7 +168,7 @@ void Mapa::addSer(int numeroSeres, string idPerfil)
 			ser->setSaude(ser->getSaude() + jogo.apanhaPerfilPeloId(idPerfil)->getSaude());
 			ser->setDefesa(ser->getDefesa() + jogo.apanhaPerfilPeloId(idPerfil)->getDefesa());
 			ser->setAtaque(ser->getAtaque() + jogo.apanhaPerfilPeloId(idPerfil)->getAtaque());
-			coloniaActual->getEdificios().at(0)->colocaSeres(ser);
+			coloniaActual->getEdificios()->at(0)->colocaSeres(ser);
 			coloniaActual->setSeres(ser);
 		}
 		d.limpaLinhaProntoAvisos();
@@ -193,17 +193,19 @@ void Mapa::mostraColonia(string idColonia)
 	}
 	d.limpaLinhaInfo();
 	d.escreveEmInfo(3);
-	cout << "Colonia " << idColonia;
+	cout << "Colonia " << idColonia
+		<< " Moedas " << aux->getMoedas();
 	
-	for (int i = 0 ; i < aux->getEdificios().size(); i++) {
+	for (int i = 0 ; i < aux->getEdificios()->size(); i++) {
 		d.escreveEmInfo(l);
-		cout << "Id " << aux->getEdificios().at(i)->getId()
-			<< " Sa " << aux->getEdificios().at(i)->getSaude()
-			<< " De " << aux->getEdificios().at(i)->getDefesa()
-			<< " At " << aux->getEdificios().at(i)->getAtaque()
-			<< " Up " << aux->getEdificios().at(i)->getNumeroUpgrades()
-			<< " Li " << aux->getEdificios().at(i)->getTerreno()->getLinha()
-			<< " Co " << aux->getEdificios().at(i)->getTerreno()->getColuna();
+		cout << "Id " << aux->getEdificios()->at(i)->getId()
+			<< " Sa " << aux->getEdificios()->at(i)->getSaude()
+			<< " De " << aux->getEdificios()->at(i)->getDefesa()
+			<< " At " << aux->getEdificios()->at(i)->getAtaque()
+			<< " Up " << aux->getEdificios()->at(i)->getNumeroUpgrades()
+			<< " Li " << aux->getEdificios()->at(i)->getTerreno()->getLinha()
+			<< " Co " << aux->getEdificios()->at(i)->getTerreno()->getColuna()
+			<< " EID" << aux->getEdificios()->at(i)->getEdificioID();
 		l++;
 	}
 	for (int y = 0; y < aux->getSeres()->size(); y++) {
@@ -213,8 +215,6 @@ void Mapa::mostraColonia(string idColonia)
 			<< " De " << aux->getSeres()->at(y)->getDefesa()
 			<< " At " << aux->getSeres()->at(y)->getAtaque()
 			<< " Pe " << aux->getSeres()->at(y)->getPerfil();
-		//	<< " Li " << aux->getSeres()->at(y)->getTerreno()->getLinha()
-		//	<< " Co " << aux->getSeres()->at(y)->getTerreno()->getColuna();
 		l++;
 	}
 }
@@ -408,7 +408,7 @@ bool Mapa::verificaEdificios(int linhas, int colunas, string id, int raio)
 			if (this->terrenos.at(x)->getEdificios() != NULL) {
 				for (int k = 0; k < this->colonias.size(); k++) {
 					if (this->colonias.at(k)->getId() == id[0]){
-						if (this->colonias.at(k)->getEdificios().at(0)->getTerreno() != this->terrenos.at(x)) {
+						if (this->colonias.at(k)->getEdificios()->at(0)->getTerreno() != this->terrenos.at(x)) {
 							d.limpaLinhaProntoAvisos();
 							cout << "Existem edificios na area" << endl;
 							return false;
@@ -507,8 +507,8 @@ bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Col
 
 	int posicaoInicio = converteCoordenadasemPosicao(Lmin, Cmin);
 	int posicaoDoEdificio = converteCoordenadasemPosicao(linhas, colunas);
-	int posicaoDoCastelo = coloniaActual->getEdificios().at(0)->getTerreno()->getPosicao();
-	int edificioID = coloniaActual->getEdificios().back()->getEdificioID() + 1;
+	int posicaoDoCastelo = coloniaActual->getEdificios()->at(0)->getTerreno()->getPosicao();
+	int edificioID = coloniaActual->getEdificios()->back()->getEdificioID() + 1;
 	
 
 	int colunaCalculo = raio * 2 + verificaCmin - verificaCmax - 1;
@@ -576,8 +576,8 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 
 	int posicaoInicio = converteCoordenadasemPosicao(Lmin, Cmin);
 	int posicaoDoEdificio = converteCoordenadasemPosicao(linhas, colunas);
-	int posicaoDoCastelo = coloniaActual->getEdificios().at(0)->getTerreno()->getPosicao();
-	int edificioID = coloniaActual->getEdificios().back()->getEdificioID() + 1;
+	int posicaoDoCastelo = coloniaActual->getEdificios()->at(0)->getTerreno()->getPosicao();
+	int edificioID = coloniaActual->getEdificios()->back()->getEdificioID() + 1;
 	//pode dar erro se vec vazio utilizar o vec empty?
 
 	int colunaCalculo = raio * 2 + verificaCmin - verificaCmax - 1;
@@ -610,6 +610,43 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 	d.limpaLinhaProntoAvisos();
 	cout << "Nao foi possivel adicionar a Quinta" << endl;
 	return false;
+}
+
+void Mapa::vendeEdificio(int id)
+{
+	//fazer for para saber se o id é torre ou quinta
+	vector <Edificios*> *edificios = coloniaActual->getEdificios();
+	//ter posicao depois ir ao mapa at posiciao set edificos null
+	for (auto edificio : *edificios) {
+		if (edificio->getId() == "T") {
+			edificio->getTerreno()->getEdificios()->vende(coloniaActual, id);
+			int pos = edificio->getTerreno()->getPosicao();
+			this->terrenos.at(pos)->setEdificios(NULL);
+			return;
+		}
+		if (edificio->getId() == "Q") {
+			edificio->getTerreno()->getEdificios()->vende(coloniaActual, id);
+			int pos = edificio->getTerreno()->getPosicao();
+			this->terrenos.at(pos)->setEdificios(NULL);
+			return;
+		}
+	}
+}
+
+void Mapa::upgradeEdificio(int id)
+{
+	vector <Edificios*> *edificios = coloniaActual->getEdificios();
+
+	for (auto edificio : *edificios) {
+		if (edificio->getId() == "T") {
+			edificio->getTerreno()->getEdificios()->upgrade(coloniaActual, id);
+			return;
+		}
+		if (edificio->getId() == "Q") {
+			edificio->getTerreno()->getEdificios()->upgrade(coloniaActual, id);
+			return;
+		}
+	}
 }
 
 void Mapa::actuamSeres()

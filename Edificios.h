@@ -67,7 +67,7 @@ public:
 	virtual void efeito(Colonia *coloniaActual, Mapa *mapa) = 0;
 	virtual void repara(Colonia *colonia, int id) = 0;
 	virtual void upgrade(Colonia *colonia, int id) = 0;
-	virtual void vende(Colonia *colonia, int id) = 0;
+	virtual void vende(Colonia * colonia, int id) = 0;
 
 
 	//constructor por copia

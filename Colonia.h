@@ -37,8 +37,11 @@ public:
 	void setSeres(Seres *ser);
 	vector <Seres*> *getSeres() { return &seres; }
 
-	vector <Edificios*> getEdificios() { return this->edificios; }
+	vector <Edificios*> *getEdificios() { return &edificios; }
 	void setEdificios(Edificios *edificio);
+
+	
+
 
 };
 

@@ -12,11 +12,11 @@ Walker::~Walker()
 void Walker::efeito(Seres * ser, Mapa *mapa)
 {
 	Desenho d;
-	Terreno * terreno = ser->getTerreno();
-	Edificios *edificio = ser->getColonia()->getEdificios().at(0);
+	Terreno *terreno = ser->getTerreno();
+	Edificios *edificio = ser->getColonia()->getEdificios()->at(0);
 	if (terreno == NULL) {
 		Colonia *colonia = ser->getColonia();
-		terreno = colonia->getEdificios().at(0)->getTerreno();
+		terreno = colonia->getEdificios()->at(0)->getTerreno();
 	}
 	vector <Terreno*> *adj = terreno->getTerrenoAdjacentes();
 	int verificaVectorAdj = 0;
@@ -46,18 +46,15 @@ void Walker::efeito(Seres * ser, Mapa *mapa)
 				posicoesJaVistas.push_back(posicaoParaMover);
 			}
 		}
-
-	
-
 	} while (adj->at(posicaoParaMover)->getSeres() != NULL && adj->at(posicaoParaMover)->getEdificios() != NULL);
 
 		mapa->getTerreno().at(posicaoDoSer)->setSeres(NULL);
 		ser->setTerreno((adj->at(posicaoParaMover)));
 		mapa->getTerreno().at(posicaoDoSer)->getTerrenoAdjacentes()->at(posicaoParaMover)->setSeres(ser);
 		ser->setLocalizacao(0);
+		
 		vector <Seres*>  *seresNoCastelo = edificio->getSeres();
 		vector<Seres *>::iterator it;
-		//d.pintaMapa(mapa, mapa->getPos_foco());
 		for (it = seresNoCastelo->begin(); it != seresNoCastelo->end(); it++) {
 			if (ser->getLocalizacao()==0) {
 				it = seresNoCastelo->erase(it);

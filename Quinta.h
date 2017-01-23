@@ -26,7 +26,7 @@ public:
 
 	void efeito(Colonia *coloniaActual, Mapa *mapa);
 	void upgrade(Colonia *colonia, int id);
-	void vende(Colonia *colonia, int id); //usar alguma coisa para apagar o edificio?
+	void vende(Colonia * colonia, int id); //usar alguma coisa para apagar o edificio?
 	void repara(Colonia *colonia, int id);
 
 };

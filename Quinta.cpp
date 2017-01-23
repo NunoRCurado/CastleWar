@@ -9,7 +9,7 @@ Quinta::Quinta()
 }
 
 
-Quinta::Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia) : Edificios (id, 20, 20, 10, 0, terreno, 0, 0, colonia)
+Quinta::Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia) : Edificios (id, 20, 20, 10, 0, terreno, 0, edificioId, colonia)
 {
 }
 
@@ -37,11 +37,25 @@ void Quinta::upgrade(Colonia * colonia, int id)
 
 void Quinta::vende(Colonia * colonia, int id)
 {
+	Edificios *edifico;
+	vector <Edificios*>  *vEdificio = colonia->getEdificios();
+	vector <Edificios*>::iterator it;
+	int tamanho = vEdificio->size();
+
 	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5)));
-	delete this->getTerreno()->getEdificios();
-	for (int i = 0; i < colonia->getEdificios().size(); i++) {
-		if (colonia->getEdificios().at(i)->getEdificioID() == id) {
-			delete colonia->getEdificios().at(i);
+	int j = 0;
+	for (int i = 0; i < vEdificio->size(); i++) {
+		if (vEdificio->at(i)->getEdificioID() == id) {
+			edifico = vEdificio->at(i);
+			for (it = vEdificio->begin(); it != vEdificio->end(); it++) {
+				if (edifico->getEdificioID() == vEdificio->at(j)->getEdificioID()) {
+					it = vEdificio->erase(it);
+				}
+				if (it == vEdificio->end()) {
+					return;
+				}
+				j++;
+			}
 		}
 	}
 }

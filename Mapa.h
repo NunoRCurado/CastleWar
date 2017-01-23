@@ -69,9 +69,11 @@ public:
 	bool verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Colonia *coloniaActual, int raio);
 	bool verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia *coloniaActual, int raio);
 
+	void vendeEdificio(int id);
+
+	void upgradeEdificio(int id);
+
 	void actuamSeres();
-	int getXdaPos(int pos);
-	int getYdaPos(int pos);
 	int randomSelector(int valInicial, int valFinal);
 
 };

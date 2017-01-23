@@ -108,7 +108,7 @@ void Desenho::limpaLinhaInfo()
 {
 	Consola c;
 	int x, y;
-	for (x = 92; x < 134; x++) {
+	for (x = 92; x < 135; x++) {
 		for (y = 3; y < 29; y++) {
 			c.gotoxy(x, y);
 			cout << " ";
@@ -154,8 +154,8 @@ void Desenho::DesenhaMapa(Mapa * mapa, int pos)
 	Consola c;
 			if (mapa->getTerreno().at(pos)->getEdificios() != NULL) {
 				for (int nCol = 0; nCol < mapa->getColonias().size(); nCol++) {
-					for (int nEdi = 0; nEdi < mapa->getColonias().at(nCol)->getEdificios().size(); nEdi++) {
-						if (mapa->getColonias().at(nCol)->getEdificios().at(nEdi)->getTerreno()->getPosicao() == pos) {
+					for (int nEdi = 0; nEdi < mapa->getColonias().at(nCol)->getEdificios()->size(); nEdi++) {
+						if (mapa->getColonias().at(nCol)->getEdificios()->at(nEdi)->getTerreno()->getPosicao() == pos) {
 							c.setTextColor(mapa->getColonias().at(nCol)->getCor());
 							break;
 						}

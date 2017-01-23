@@ -32,7 +32,7 @@ public:
 	void repara(Colonia *colonia, int id);
 	void efeito(Colonia *colonia, Mapa *mapa);
 	void upgrade(Colonia *colonia, int id);
-	void vende(Colonia *colonia, int id);
+	void vende(Colonia * colonia, int id);
 };
 
 
