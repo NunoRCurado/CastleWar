@@ -74,6 +74,7 @@ public:
 	void controlaCicloColonias(int turnos);
 	void ComandosDoPC();
 	void upgradeEdificio(int id);
+	void verificaMortos();
 
 	void actuamSeres();
 	int randomSelector(int valInicial, int valFinal);
