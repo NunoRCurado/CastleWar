@@ -29,7 +29,7 @@ bool Interface::verificaComando(int controlo)
 		else {
 			mapa->criarMapa(atoi(comObj.getArg2().c_str()), atoi(comObj.getArg3().c_str()));
 			d.limpaLinhaProntoAvisos();
-			cout << "mapa feito" << endl;
+			cout << "Mapa feito" << endl;
 			return true;
 		}
 	}
@@ -47,7 +47,7 @@ bool Interface::verificaComando(int controlo)
 		else {
 			jogo.setMoedasInicial(atoi(comObj.getArg2().c_str())); //verificao se introduzir strings
 			d.limpaLinhaProntoAvisos();
-			cout << "moedas inseridas" << endl;
+			cout << "Moedas inseridas" << endl;
 			return true;
 		}
 	}
@@ -74,7 +74,7 @@ bool Interface::verificaComando(int controlo)
 				id++;
 			}
 			c.setTextColor(7);
-			d.preencheMapa(mapa, 0);
+			mapa->focoMapa(0, 0);
 			d.limpaLinhaProntoAvisos();
 			cout << jogo.getNumeroJogadores() << " jogadores criados";
 			return true;
@@ -100,7 +100,7 @@ bool Interface::verificaComando(int controlo)
 						mapa->getTerreno().at(x)->getEdificios()->setTerreno(mapa->getTerreno().at(y));
 						mapa->getTerreno().at(y)->setEdificios(mapa->getColonias().at(0)->getEdificios().at(0));
 						mapa->getTerreno().at(x)->setEdificios(NULL);
-						d.preencheMapa(mapa, 0);
+						mapa->focoMapa(0, 0);
 						d.limpaLinhaProntoAvisos();
 						cout << "Castelo "<< comObj.getArg2()<< " mudado com sucesso." << endl;
 						return true;
