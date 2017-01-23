@@ -36,7 +36,7 @@ public:
 	void MapaInicial();
 	void DesenhaMapa(Mapa *mapa, int pos);
 	void escreveEmInfo(int linha);
-	void preencheMapa(Mapa *mapa, int i);
+	//void preencheMapa(Mapa *mapa, int i);
 	void pintaMapa(Mapa *mapa, vector<int> pos);
 };
 

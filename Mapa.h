@@ -16,6 +16,8 @@ class Jogo;
 class Mapa {
 private:
 
+	vector<int> pos_foco;
+
 	int numeroColuna;
 	int numeroLinha;
 	Jogo &jogo;
@@ -29,6 +31,9 @@ public:
 
 	Mapa(Jogo &jogo) : jogo(jogo) {}
 	~Mapa();
+	
+	void setPos_foco(vector <int> pos_foco) { this->pos_foco = pos_foco; }
+	vector<int> getPos_foco() { return this->pos_foco; }
 
 
 	void setNumeroColuna(int numeroColuna) { this->numeroColuna = numeroColuna; }

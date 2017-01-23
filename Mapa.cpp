@@ -25,7 +25,6 @@ void Mapa::criarMapa(int numeroLinha, int numeroColuna){
 		}
 
 	}
-	//d.MapaInicial();
 	for (int i = 0; i < numeroLinha*numeroColuna; i++) {
 		setAdjacentes(this->terrenos.at(i));
 	}
@@ -170,7 +169,6 @@ void Mapa::addSer(int numeroSeres, string idPerfil)
 			ser->setAtaque(ser->getAtaque() + jogo.apanhaPerfilPeloId(idPerfil)->getAtaque());
 			coloniaActual->getEdificios().at(0)->colocaSeres(ser);
 			coloniaActual->setSeres(ser);
-			d.preencheMapa(this, 0);
 		}
 		d.limpaLinhaProntoAvisos();
 		cout << "Foram criados " << numeroSeres << " com sucesso"<<endl;
@@ -246,8 +244,16 @@ void Mapa::mostraPerfil(string idperfil)
 
 bool Mapa::focoMapa(int linhas, int colunas) 
 {
+	this->pos_foco.clear();
+	if (linhas + 10 >= this->getNumeroLinha()) {
+		int dif = linhas + 10 - this->getNumeroLinha();
+		linhas = linhas - dif;
+	}
+	if (colunas + 20 >= this->getNumeroColuna()) {
+		int dif = colunas + 20 - this->getNumeroColuna();
+		colunas = colunas - dif;
+	}
 	Desenho d;
-	vector<int> pos;
 	int pos_vector = 0;
 	if (linhas <= 10 && colunas <= 20) {  // caso minimo  funciona
 		for (int y = 0; y < 20; y++) {
@@ -255,12 +261,12 @@ bool Mapa::focoMapa(int linhas, int colunas)
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
 	else if(linhas <= 10){//caso linhas menor que 10 funciona
@@ -269,68 +275,68 @@ bool Mapa::focoMapa(int linhas, int colunas)
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
-	else if (colunas <= 20) {//caso coluna menor que 20 rebenta
+	else if (colunas <= 20) {//caso coluna menor que 20 
 		for (int y = linhas - 10; y < linhas + 10; y++) {
 			for (int x = 0; x < 40; x++) {
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
-	else if (linhas >= this->getNumeroLinha() - 20 && colunas >= this->getNumeroColuna() - 40) { // caso maximo funciona
+	else if (linhas >= this->getNumeroLinha() - 10 && colunas >= this->getNumeroColuna() - 20) { // caso maximo funciona
 		for (int y = this->getNumeroLinha() - 20; y < this->getNumeroLinha(); y++) {
 			for (int x = this->getNumeroColuna() - 40; x < this->getNumeroColuna(); x++) {
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
-	else if(linhas >= this->getNumeroLinha() - 20){ // caso as linhas excedam o mapa
+	else if(linhas > this->getNumeroLinha() - 10){ // caso as linhas excedam o mapa
 		for (int y = this->getNumeroLinha() - 20; y < this->getNumeroLinha(); y++) {
 			for (int x = colunas - 20; x < colunas + 20; x++) {
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
-	else if (colunas >= this->getNumeroColuna() - 40) { // caso as colunas excedam o mapa
-		for (int y = linhas - 10; y < linhas + 10; y++) {//isto esta mal
+	else if (colunas > this->getNumeroColuna() - 20) { // caso as colunas excedam o mapa
+		for (int y = linhas - 10; y < linhas + 10; y++) {
 			for (int x = this->getNumeroColuna() - 40; x < this->getNumeroColuna(); x++) {
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
 	else // caso normal
@@ -340,12 +346,12 @@ bool Mapa::focoMapa(int linhas, int colunas)
 				for (Terreno *p : terrenos) {
 					if (p->getColuna() == x && p->getLinha() == y) {
 						pos_vector = this->converteCoordenadasemPosicao(y, x);
-						pos.push_back(pos_vector);
+						this->pos_foco.push_back(pos_vector);
 					}
 				}
 			}
 		}
-		d.pintaMapa(this, pos);
+		d.pintaMapa(this, pos_foco);
 		return true;
 	}
 }
@@ -522,7 +528,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Col
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - torre->getCusto());
 					coloniaActual->setEdificios(torre);
 					terrenos.at(posicaoDoEdificio)->setEdificios(torre);
-					d.preencheMapa(this, 0);
+					d.pintaMapa(this, pos_foco);
 					d.limpaLinhaProntoAvisos();
 					cout << "Torre adicionada com sucesso" << endl;
 					return true;
@@ -592,7 +598,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - quinta->getCusto());
 					coloniaActual->setEdificios(quinta);
 					terrenos.at(posicaoDoEdificio)->setEdificios(quinta);
-					d.preencheMapa(this, 0);
+					d.pintaMapa(this, pos_foco);
 					d.limpaLinhaProntoAvisos();
 					cout << "Quinta adicionada com sucesso" << endl;
 					return true;
@@ -642,10 +648,14 @@ void Mapa::actuamSeres()
 			}
 		}
 	}
+
 	else {
 		d.limpaLinhaProntoAvisos();
 		cout << "Seres estao em modo pacifico" << endl;
 	}
+
+	d.pintaMapa(this, this->getPos_foco());
+
 }
 
 int Mapa::randomSelector(int valInicial, int valFinal)

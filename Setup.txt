@@ -1,4 +1,4 @@
-Dim 20 40
+Dim 30 50
 Moedas 4000000
 Oponentes 3
 Next
