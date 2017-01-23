@@ -486,7 +486,7 @@ bool Jogo::removeCaracteristicaDoPerfil(string id, string id1){
 						aux->erase(remove(aux->begin(), aux->end(), aux->at(j)), aux->end());
 						perfis.at(i)->setVectorCaracteristicas(*aux);
 						d.limpaLinhaProntoAvisos();
-						cout << "TODAS as caracteristicas com este nome foram apagadas!" << endl;
+						cout << "Todas as caracteristicas com este nome foram apagadas!" << endl;
 						return false;
 					}
 				}

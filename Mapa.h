@@ -78,6 +78,8 @@ public:
 	void actuamSeres();
 	int randomSelector(int valInicial, int valFinal);
 
+	void removeSeresDaColonia(Colonia * colonia, Seres * ser);
+
 };
 
 #endif

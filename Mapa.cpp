@@ -175,7 +175,7 @@ void Mapa::addSer(int numeroSeres, string idPerfil)
 	}
 	else {
 		d.limpaLinhaProntoAvisos();
-		cout << "nao ha dinheiro" << endl;
+		cout << "Nao ha dinheiro" << endl;
 	}
 }
 
@@ -208,13 +208,26 @@ void Mapa::mostraColonia(string idColonia)
 		l++;
 	}
 	for (int y = 0; y < aux->getSeres()->size(); y++) {
-		d.escreveEmInfo(l);
-		cout << "Id " << aux->getSeres()->at(y)->getId()
-			<< " Sa " << aux->getSeres()->at(y)->getSaude()
-			<< " De " << aux->getSeres()->at(y)->getDefesa()
-			<< " At " << aux->getSeres()->at(y)->getAtaque()
-			<< " Pe " << aux->getSeres()->at(y)->getPerfil();
-		l++;
+		if (aux->getSeres()->at(y)->getLocalizacao() == 1) {
+			d.escreveEmInfo(l);
+			cout << "Id " << aux->getSeres()->at(y)->getId()
+				<< " Sa " << aux->getSeres()->at(y)->getSaude()
+				<< " De " << aux->getSeres()->at(y)->getDefesa()
+				<< " At " << aux->getSeres()->at(y)->getAtaque()
+				<< " Pe " << aux->getSeres()->at(y)->getPerfil();
+			l++;
+		}
+		else {
+			d.escreveEmInfo(l);
+			cout << "Id " << aux->getSeres()->at(y)->getId()
+				<< " Sa " << aux->getSeres()->at(y)->getSaude()
+				<< " De " << aux->getSeres()->at(y)->getDefesa()
+				<< " At " << aux->getSeres()->at(y)->getAtaque()
+				<< " Pe " << aux->getSeres()->at(y)->getPerfil()
+				<< " Li " << aux->getSeres()->at(y)->getTerreno()->getLinha()
+				<< " Co " << aux->getSeres()->at(y)->getTerreno()->getColuna();
+			l++;
+		}
 	}
 }
 
@@ -528,7 +541,6 @@ bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Col
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - torre->getCusto());
 					coloniaActual->setEdificios(torre);
 					terrenos.at(posicaoDoEdificio)->setEdificios(torre);
-					//d.pintaMapa(this, pos_foco);
 					d.limpaLinhaProntoAvisos();
 					cout << "Torre adicionada com sucesso" << endl;
 					return true;
@@ -598,7 +610,6 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - quinta->getCusto());
 					coloniaActual->setEdificios(quinta);
 					terrenos.at(posicaoDoEdificio)->setEdificios(quinta);
-					//d.pintaMapa(this, pos_foco);
 					d.limpaLinhaProntoAvisos();
 					cout << "Quinta adicionada com sucesso" << endl;
 					return true;
@@ -613,20 +624,24 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 
 void Mapa::vendeEdificio(int id)
 {
-	//fazer for para saber se o id é torre ou quinta
+	Desenho d;
 	vector <Edificios*> *edificios = coloniaActual->getEdificios();
-	//ter posicao depois ir ao mapa at posiciao set edificos null
+	
 	for (auto edificio : *edificios) {
 		if (edificio->getId() == "T") {
 			edificio->getTerreno()->getEdificios()->vende(coloniaActual, id);
 			int pos = edificio->getTerreno()->getPosicao();
 			this->terrenos.at(pos)->setEdificios(NULL);
+			d.limpaLinhaProntoAvisos();
+			cout << "Edificio com EID " << id << " Vendido";
 			return;
 		}
 		if (edificio->getId() == "Q") {
 			edificio->getTerreno()->getEdificios()->vende(coloniaActual, id);
 			int pos = edificio->getTerreno()->getPosicao();
 			this->terrenos.at(pos)->setEdificios(NULL);
+			d.limpaLinhaProntoAvisos();
+			cout << "Edificio com EID " << id << " Vendido";
 			return;
 		}
 	}
@@ -738,14 +753,10 @@ void Mapa::actuamSeres()
 			}
 		}
 	}
-
 	else {
 		d.limpaLinhaProntoAvisos();
 		cout << "Seres estao em modo pacifico" << endl;
-	}
-	
-		
-	
+	}	
 }
 
 int Mapa::randomSelector(int valInicial, int valFinal)
@@ -756,4 +767,25 @@ int Mapa::randomSelector(int valInicial, int valFinal)
 	return dist(mt);
 }
 
+void Mapa::removeSeresDaColonia(Colonia *colonia, Seres * ser)
+{
+	Seres *aux;
+	vector <Seres*>  *seresNaColonia = colonia->getSeres();
+	vector<Seres *>::iterator it;
+	int posSerRecebido = ser->getTerreno()->getPosicao();
+	int j = 0;
 
+	for (int i = 0; i < seresNaColonia->size(); i++) { //percorre os seres todos da colonia
+		if (seresNaColonia->at(i)->getTerreno()->getPosicao() == posSerRecebido) { //encontra o ser recebido na colonia
+			aux = seresNaColonia->at(i);
+			for (it = seresNaColonia->begin(); it != seresNaColonia->end(); it++) {
+				if (aux->getTerreno()->getPosicao() == seresNaColonia->at(j)->getTerreno()->getPosicao()) {// ver esta parte
+					it = seresNaColonia->erase(it);
+				}
+				if (it == seresNaColonia->end() || seresNaColonia->size() == 0) {
+					break;
+				}
+			}
+		}
+	}
+}

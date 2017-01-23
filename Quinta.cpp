@@ -44,12 +44,12 @@ void Quinta::vende(Colonia * colonia, int id)
 
 	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5)));
 	int j = 0;
-	for (int i = 0; i < vEdificio->size(); i++) {
-		if (vEdificio->at(i)->getEdificioID() == id) {
-			edifico = vEdificio->at(i);
-			for (it = vEdificio->begin(); it != vEdificio->end(); it++) {
-				if (edifico->getEdificioID() == vEdificio->at(j)->getEdificioID()) {
-					it = vEdificio->erase(it);
+	for (int i = 0; i < vEdificio->size(); i++) { //percorre os edificios todos
+		if (vEdificio->at(i)->getEdificioID() == id) { // verifica se o edificio nesta posicao é igual ao recebido
+			edifico = vEdificio->at(i);  // edificio auxiliar
+			for (it = vEdificio->begin(); it != vEdificio->end(); it++) { //percorre o vector vEdificios
+				if (edifico->getEdificioID() == vEdificio->at(j)->getEdificioID()) { //corre o vEdificio todo e encontra um igual
+					it = vEdificio->erase(it); //apaga quando encontrar
 				}
 				if (it == vEdificio->end()) {
 					return;
