@@ -9,8 +9,7 @@ Quinta::Quinta()
 }
 
 
-Quinta::Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia) : Edificios (id, 20, 20, 10, 0, terreno, 0, edificioId, colonia)
-Quinta::Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia, char idColonia) : Edificios (id, 20, 20, 10, 0, terreno, 0, 0, colonia, idColonia)
+Quinta::Quinta(string id, Terreno *terreno, int edificioId, Colonia *colonia, char idColonia) : Edificios (id, 20, 20, 10, 0, terreno, 0, edificioId, colonia, idColonia)
 {
 }
 
