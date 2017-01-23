@@ -125,8 +125,7 @@ void Mapa::setColonias(Colonia * colonia)
 		this->colonias.push_back(colonia);
 		this->terrenos.at(posicao)->setEdificios(castelo);
 		coloniaActual = this->colonias.at(0);
-		//inserir random e depois inserir castelo no random
-		//meter mapa d.preencheMapa(, 0);
+		setColoniaActual(coloniaActual);
 	}
 	else {
 		//verificar as 10 casas a volta? 
@@ -606,15 +605,46 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 	return false;
 }
 
+void Mapa::controlaCicloColonias(int turnos)
+{
+	int tamanhoColonias = getColonias().size();
+	int i = 0;
+	for (int k = 0; k < turnos; k++) {
+
+		for (i = 0; i < tamanhoColonias; i++) {
+			coloniaActual = getColonias().at(i);
+			setColoniaActual(coloniaActual);
+			if (i==0) {
+				actuamSeres();
+			}
+			else {
+				coloniaActual->setFlagAge(1);
+				addSer(2, "A");
+				actuamSeres();
+				if (i == tamanhoColonias - 1) {
+					setColoniaActual(getColonias().at(0));
+				}
+			}
+		}
+	}
+	
+}
+
 void Mapa::actuamSeres()
 {
+	Desenho d;
 	vector <Seres*> *seres = coloniaActual->getSeres();
 	int n = seres->size();
-
-	for (auto ser : *seres) {
-		for (auto car : *ser->getCaracteristicasSeres() ) {
-			car->efeito(ser, this);
+	if (coloniaActual->getFlagAge() == 1){
+		for (auto ser : *seres) {
+			for (auto car : *ser->getCaracteristicasSeres()) {
+				car->efeito(ser, this);
+			}
 		}
+	}
+	else {
+		d.limpaLinhaProntoAvisos();
+		cout << "Seres estao em modo pacifico" << endl;
 	}
 }
 

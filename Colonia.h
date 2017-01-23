@@ -18,10 +18,11 @@ private:
 	Jogo &jogo;
 	vector <Seres *> seres;
 	vector <Edificios *> edificios;
+	int flagAge = 0;
 
 public:
 
-	Colonia(Jogo &jogo, int moedas, char id, int cor);
+	Colonia(Jogo &jogo, int moedas, char id, int cor, int flagAge);
 	~Colonia();
 
 	void setMoedas(double moedas) { this->moedas = moedas; }
@@ -31,8 +32,8 @@ public:
 	void setCor(int cor) { this->cor = cor; }
 	int getCor() { return this->cor; }
 
-
-	
+	int getFlagAge() { return this->flagAge; }
+	void setFlagAge(int flagAge) { this->flagAge = flagAge; }
 
 	void setSeres(Seres *ser);
 	vector <Seres*> *getSeres() { return &seres; }

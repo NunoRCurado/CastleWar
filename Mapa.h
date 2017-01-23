@@ -48,7 +48,7 @@ public:
 
 	
 	Colonia* getColoniaActual() { return this->coloniaActual; }
-	void setColoniaActual() { this->coloniaActual = coloniaActual; }
+	void setColoniaActual(Colonia *coloniaActual) { this->coloniaActual = coloniaActual; }
 
 	void mostraColonia(string idColonia);
 	void mostraPerfil(string perfil);
@@ -64,6 +64,7 @@ public:
 	bool verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Colonia *coloniaActual, int raio);
 	bool verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia *coloniaActual, int raio);
 
+	void controlaCicloColonias(int turnos);
 	void actuamSeres();
 	int getXdaPos(int pos);
 	int getYdaPos(int pos);

@@ -11,6 +11,7 @@
 #include "Perfil.h"
 using namespace std;
 class Mapa;
+class Colonia;
 class Interface;
 
 
@@ -56,6 +57,8 @@ public:
 
 
 	Mapa *getMapa() { return mapa; }
+
+
 
 };
 

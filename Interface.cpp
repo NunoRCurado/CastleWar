@@ -67,7 +67,7 @@ bool Interface::verificaComando(int controlo)
 			jogo.setNumeroJogadores(atoi(comObj.getArg2().c_str())+1);
 			char id = 'A';
 			for (int i = 0; i < jogo.getNumeroJogadores(); i++) {
-				mapa->setColonias(new Colonia(jogo, jogo.getMoedasInicial(), id, i+1));
+				mapa->setColonias(new Colonia(jogo, jogo.getMoedasInicial(), id, i+1, 0));
 				d.escreveEmInfo(3 + i);
 				c.setTextColor(mapa->getColonias().at(i)->getCor());
 				cout << "Jogador " << id;
@@ -181,8 +181,16 @@ bool Interface::verificaComandoInicioJogo()
 		mapa->constroiEdificio(comObj.getArg2(), atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
 		return false;
 	}
+	if (comObj.getArg1() == "ATACA") {
+		mapa->getColoniaActual()->setFlagAge(1);
+		return false;
+	}
+	if (comObj.getArg1() == "RECOLHE") {
+		mapa->getColoniaActual()->setFlagAge(0);
+	}
+
 	if (comObj.getArg1() == "NEXT") {
-		mapa->actuamSeres();
+		mapa->controlaCicloColonias(1);
 		return true;
 	}
 	return false;
