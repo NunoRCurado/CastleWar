@@ -1,5 +1,5 @@
-Dim 30 50
-Moedas 500
+Dim 20 40
+Moedas 150
 Oponentes 3
 Next
 Mkperfil a

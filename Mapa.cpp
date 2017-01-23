@@ -669,24 +669,29 @@ void Mapa::verificaMortos()
 	vector <Seres *> *seresColonia;
 	vector <CaracteristicasSeres*> *caracteristicas;
 	int posicaoMapa;
+	bool flag = false;
 
 	for (int i = 0; i < totalColonias; i++) {
 		seresColonia = getColonias().at(i)->getSeres();
+
 		for (int k = 0; k < seresColonia->size(); k++) {
+
 			if (seresColonia->at(k)->getSaude() <= 0) {
+			
 				posicaoMapa = seresColonia->at(k)->getTerreno()->getPosicao();
 				terrenos.at(posicaoMapa)->setSeres(NULL);
 				caracteristicas = seresColonia->at(k)->getCaracteristicasSeres();
-				for (int j = 0; caracteristicas->size(); j++) {
+				
+				for (int j = 0; j<caracteristicas->size(); j++) {
 					if (caracteristicas->at(j)->getNome() == "SECONDCHANCE") {
-						caracteristicas->at(j)->efeito(seresColonia->at(k), NULL);
-					}
-					else {
-
-					}
-					 
+						caracteristicas->at(j)->efeito(seresColonia->at(k), this);
+						flag == true;
+					}		
 				}
-
+				if (flag == false) {
+					this->removeSeresDaColonia(getColonias().at(i), seresColonia->at(k));
+				}
+				flag == false;
 			}
 		}
 
@@ -715,6 +720,7 @@ void Mapa::controlaCicloColonias(int turnos)
 			}
 		}
 	}
+	verificaMortos();
 	
 }
 
@@ -812,10 +818,12 @@ void Mapa::removeSeresDaColonia(Colonia *colonia, Seres * ser)
 			for (it = seresNaColonia->begin(); it != seresNaColonia->end(); it++) {
 				if (aux->getTerreno()->getPosicao() == seresNaColonia->at(j)->getTerreno()->getPosicao()) {// ver esta parte
 					it = seresNaColonia->erase(it);
+					return;
 				}
 				if (it == seresNaColonia->end() || seresNaColonia->size() == 0) {
-					break;
+					return;
 				}
+				j++;
 			}
 		}
 	}

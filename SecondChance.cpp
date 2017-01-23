@@ -14,8 +14,11 @@ void SecondChance::efeito(Seres * ser, Mapa *mapa)
 	if (ser->getSaude() <= 0) {             //confirmar que unidades nao ficam com hp negativo
 		if (getActivo() == true) {
 			ser->setSaude(10);			//resto dos bonus?
-			ser->setLocalizacao(1);  //alterar de forma a ir para o castelo, preciso saber a pos do castelo 
-			setActivo(false);		// ver com o ponteiro do mapa
+			ser->setLocalizacao(1);  
+			setActivo(false);		
+		}
+		else {
+			mapa->removeSeresDaColonia(ser->getColonia(), ser);
 		}
 	}
 }
