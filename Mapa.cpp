@@ -528,7 +528,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Col
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - torre->getCusto());
 					coloniaActual->setEdificios(torre);
 					terrenos.at(posicaoDoEdificio)->setEdificios(torre);
-					d.pintaMapa(this, pos_foco);
+					//d.pintaMapa(this, pos_foco);
 					d.limpaLinhaProntoAvisos();
 					cout << "Torre adicionada com sucesso" << endl;
 					return true;
@@ -598,7 +598,7 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 					coloniaActual->setMoedas(coloniaActual->getMoedas() - quinta->getCusto());
 					coloniaActual->setEdificios(quinta);
 					terrenos.at(posicaoDoEdificio)->setEdificios(quinta);
-					d.pintaMapa(this, pos_foco);
+					//d.pintaMapa(this, pos_foco);
 					d.limpaLinhaProntoAvisos();
 					cout << "Quinta adicionada com sucesso" << endl;
 					return true;

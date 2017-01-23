@@ -15,7 +15,7 @@ void Ecologico::efeito(Seres * ser, Mapa *mapa)
 	char idSer = ser->getColonia()->getId();
 	if (terreno == NULL) {
 		Colonia *colonia = ser->getColonia();
-		terreno = colonia->getEdificios().at(0)->getTerreno();
+		terreno = colonia->getEdificios()->at(0)->getTerreno();
 	}
 	vector <Terreno*> *adj = terreno->getTerrenoAdjacentes();
 	int n = adj->size();

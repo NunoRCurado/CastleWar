@@ -205,6 +205,7 @@ void Jogo::InicioJogo()
 	if (coloniaActual == mapa->getColonias().at(0))
 	{
 		do {
+			d.pintaMapa(mapa, mapa->getPos_foco());
 			d.limpaLinhaProntoComandos();
 			getline(cin, comando);
 			comObj = comObj.separaComando(comando, comObj);

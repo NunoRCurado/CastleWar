@@ -137,14 +137,21 @@ bool Interface::verificaComandoFase2(int controlo)
 
 	else if (comObj.getArg1() == "ADDPERFIL") {
 		jogo.setPerfilNoVector(comObj.getArg2(), comObj.getArg3());
+		d.limpaLinhaProntoAvisos();
+		cout << "Perfil " << comObj.getArg3() << " Adicionado";
 		return false;
 	}
 	else if (comObj.getArg1() == "RMPERFIL") {
 		jogo.removePerfil(comObj.getArg2());
+		d.limpaLinhaProntoAvisos();
+		cout << "Perfil " << comObj.getArg2() << " Removido";
 		return false;
 	}
 	else if (comObj.getArg1() == "SUBPERFIL") {
 		jogo.removeCaracteristicaDoPerfil(comObj.getArg2(), comObj.getArg3());
+		d.limpaLinhaProntoAvisos();
+		cout << "Caracteristica " << comObj.getArg3() << " Removida";
+		return false;
 	}
 	return false;
 }
@@ -161,10 +168,14 @@ bool Interface::verificaComandoInicioJogo()
 	}
 	if (comObj.getArg1() == "SETMOEDAS"){
 		mapa->setMoedasaUmaColonia(comObj.getArg2(), atoi(comObj.getArg3().c_str()));
+		d.limpaLinhaProntoAvisos();
+		cout << "Moedas alteradas para " << comObj.getArg2();
 		return false;
 	}
 	if (comObj.getArg1() == "LIST") {
 		mapa->mostraColonia(comObj.getArg2());
+		d.limpaLinhaProntoAvisos();
+		cout << "Info da Colonia " << comObj.getArg2();
 		return false;
 	}
 	if (comObj.getArg1() == "LISTP") {
@@ -179,30 +190,40 @@ bool Interface::verificaComandoInicioJogo()
 	}
 	if (comObj.getArg1() == "BUILD") {
 		mapa->constroiEdificio(comObj.getArg2(), atoi(comObj.getArg3().c_str()), atoi(comObj.getArg4().c_str()));
+		d.limpaLinhaProntoAvisos();
+		cout << "Edificio " << comObj.getArg2() << " Construido";
 		return false;
 	}
 	if (comObj.getArg1() == "SELL") {
 		mapa->vendeEdificio(atoi(comObj.getArg2().c_str()));
+		d.limpaLinhaProntoAvisos();
+		cout << "Edificio com EID " << comObj.getArg2() << " Vendido";
 		return false;
 	}
 	if (comObj.getArg1() == "ATACA") {
 		mapa->getColoniaActual()->setFlagAge(1);
+		d.limpaLinhaProntoAvisos();
+		cout << "Ataca";
 		return false;
 	}
 	if (comObj.getArg1() == "RECOLHE") {
 		mapa->getColoniaActual()->setFlagAge(0);
+		d.limpaLinhaProntoAvisos();
+		cout << "Recolhe";
 		return false;
 	}
 
 	if (comObj.getArg1() == "NEXT") {
 		mapa->controlaCicloColonias(1);
-		d.pintaMapa(mapa, mapa->getPos_foco());
+		d.limpaLinhaProntoAvisos();
+		cout << "Proximo Turno";
 		return false;
 	}
 	if (comObj.getArg1() == "NEXTN") {
 		int turnos = atoi(comObj.getArg2().c_str());
 		mapa->controlaCicloColonias(turnos);
-		d.pintaMapa(mapa, mapa->getPos_foco());
+		d.limpaLinhaProntoAvisos();
+		cout << "Proximos " << turnos << " Turnos";
 		return false;
 	}
 	else {
