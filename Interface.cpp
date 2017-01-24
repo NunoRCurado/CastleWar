@@ -188,6 +188,16 @@ bool Interface::verificaComandoInicioJogo()
 		mapa->vendeEdificio(atoi(comObj.getArg2().c_str()));
 		return false;
 	}else
+	if (comObj.getArg1() == "REPAIR") {
+		mapa->reparaEdificio(atoi(comObj.getArg2().c_str()));
+		return false;
+	}
+	else
+	if (comObj.getArg1() == "UPGRADE") {
+		mapa->upgradeEdificio(atoi(comObj.getArg2().c_str()));
+		return false;
+	}
+	else
 	if (comObj.getArg1() == "ATACA") {
 		mapa->getColoniaActual()->setFlagAge(1);
 		d.limpaLinhaProntoAvisos();
@@ -212,7 +222,16 @@ bool Interface::verificaComandoInicioJogo()
 		d.limpaLinhaProntoAvisos();
 		cout << "Proximos " << turnos << " Turnos";
 		return false;
-	}else {
+	}
+	else 
+	if (comObj.getArg1() == "LOAD") {
+		string ficheiro = comObj.getArg2();
+		jogo.JogoFicheiro(ficheiro);
+		d.limpaLinhaProntoAvisos();
+		cout << "Jogo Carregado";
+		return false;
+	} 
+	else{
 		d.limpaLinhaProntoAvisos();
 		cout << "Comando invalido" << endl;
 		return false;

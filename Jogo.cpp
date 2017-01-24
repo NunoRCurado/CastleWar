@@ -31,6 +31,38 @@ Jogo::~Jogo()
 {
 }
 
+void Jogo::JogoFicheiro(string file) {
+	string comando;
+	Comando comObj;
+	Desenho d;
+
+	int controlo = 0;
+	bool flag = false;
+	char s;
+	int numeroTicks = 0;
+	
+	mapa->focoMapa(0, 0);
+
+	Colonia *coloniaActual = mapa->getColoniaActual();
+
+	ifstream ifi(file);
+	if (ifi.is_open() == false) {
+		d.limpaLinhaProntoAvisos();
+		cout << "Erro a abrir ficheiro" << endl;
+		return;
+	}
+	if (coloniaActual == mapa->getColonias().at(0))
+	{
+		while (getline(ifi, comando)) {
+			comObj = comObj.separaComando(comando, comObj);
+			itf->setComando(comObj);
+			flag = itf->verificaComandoInicioJogo();
+			d.pintaMapa(mapa, mapa->getPos_foco());
+			d.limpaLinhaProntoComandos();
+		}
+	}
+}
+
 void Jogo::ConfiguraJogoFicheiro() {
 	string comando;
 	Comando comObj;

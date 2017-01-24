@@ -28,7 +28,6 @@ public:
 	void DesenhoLimitesMapa();
 	void DesenhoLimitesInfo();
 	void DesenhoLimitesComandos();
-	//void DesenhaSer(string nome, int posicao, int posicaoAnterior);
 	void DesenhaTudo();
 	void limpaLinhaProntoComandos();
 	void limpaLinhaProntoAvisos();
@@ -36,7 +35,6 @@ public:
 	void MapaInicial();
 	void DesenhaMapa(Mapa *mapa, int pos);
 	void escreveEmInfo(int linha);
-	//void preencheMapa(Mapa *mapa, int i);
 	void pintaMapa(Mapa *mapa, vector<int> pos);
 };
 

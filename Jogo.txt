@@ -1,0 +1,6 @@
+Ser 2 a
+Ser 3 b
+Ser 1 c
+Ser 4 d
+Ser 2 e
+nextn 10

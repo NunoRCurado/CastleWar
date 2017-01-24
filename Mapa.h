@@ -69,6 +69,8 @@ public:
 	bool verificaProximidadeAoProprioCasteloTorre(int linhas, int colunas, Colonia *coloniaActual, int raio);
 	bool verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Colonia *coloniaActual, int raio);
 
+	void reparaEdificio(int id);
+
 	void vendeEdificio(int id);
 
 	void controlaCicloColonias(int turnos);
