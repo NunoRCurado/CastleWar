@@ -670,35 +670,43 @@ void Mapa::verificaMortos()
 	vector <CaracteristicasSeres*> *caracteristicas;
 	int posicaoMapa;
 	bool flag = false;
+	bool flag1 = false;
+	int tamanhoSeres;
 
 	for (int i = 0; i < totalColonias; i++) {
-		seresColonia = getColonias().at(i)->getSeres();
+		
+		if (getColonias().at(i)->getSeres()->size() > 0) {
+			seresColonia = getColonias().at(i)->getSeres();
+			tamanhoSeres = seresColonia->size();
 
-		for (int k = 0; k < seresColonia->size(); k++) {
+			for (int k = 0; k < tamanhoSeres; k++) {
 
-			if (seresColonia->at(k)->getSaude() <= 0) {
-			
-				posicaoMapa = seresColonia->at(k)->getTerreno()->getPosicao();
-				terrenos.at(posicaoMapa)->setSeres(NULL);
-				caracteristicas = seresColonia->at(k)->getCaracteristicasSeres();
-				
-				for (int j = 0; j<caracteristicas->size(); j++) {
-					if (caracteristicas->at(j)->getNome() == "SECONDCHANCE") {
-						caracteristicas->at(j)->efeito(seresColonia->at(k), this);
-						flag == true;
-					}		
+				if (seresColonia->at(k)->getSaude() <= 0) {
+
+					posicaoMapa = seresColonia->at(k)->getTerreno()->getPosicao();
+					terrenos.at(posicaoMapa)->setSeres(NULL);
+					caracteristicas = seresColonia->at(k)->getCaracteristicasSeres();
+
+					for (int j = 0; j < caracteristicas->size(); j++) {
+						if (caracteristicas->at(j)->getNome() == "SECONDCHANCE") {
+							caracteristicas->at(j)->efeito(seresColonia->at(k), this);
+							flag == true;
+						}
+					}
+					if (flag == false) {
+						this->removeSeresDaColonia(getColonias().at(i), seresColonia->at(k));
+						k = 0;
+						tamanhoSeres = seresColonia->size();
+					}
+					flag == false;
 				}
-				if (flag == false) {
-					this->removeSeresDaColonia(getColonias().at(i), seresColonia->at(k));
-				}
-				flag == false;
 			}
 		}
 
 	}
 }
 
-void Mapa::controlaCicloColonias(int turnos)
+bool Mapa::controlaCicloColonias(int turnos)
 {
 	int tamanhoColonias = getColonias().size();
 	int i = 0;
@@ -710,6 +718,7 @@ void Mapa::controlaCicloColonias(int turnos)
 			if (i==0) {
 				if (coloniaActual->getFlagAge() == 1) {
 					actuamSeres();
+					actuamEdificios();
 				}
 			}
 			else {
@@ -721,6 +730,10 @@ void Mapa::controlaCicloColonias(int turnos)
 		}
 	}
 	verificaMortos();
+	if (tamanhoColonias == 1) {
+		return true;
+	}
+	return false;
 	
 }
 
@@ -776,6 +789,7 @@ void Mapa::ComandosDoPC()
 		}
 	}
 	actuamSeres();
+	actuamEdificios();
 }
 
 void Mapa::actuamSeres()
@@ -783,17 +797,38 @@ void Mapa::actuamSeres()
 	Desenho d;
 	vector <Seres*> *seres = coloniaActual->getSeres();
 	int n = seres->size();
-	if (coloniaActual->getFlagAge() == 1){
-		for (auto ser : *seres) {
-			for (auto car : *ser->getCaracteristicasSeres()) {
-				car->efeito(ser, this);
+	if (seres == NULL) {
+		return;
+	}
+	else {
+		if (coloniaActual->getFlagAge() == 1) {
+			for (auto ser : *seres) {
+				for (auto car : *ser->getCaracteristicasSeres()) {
+					car->efeito(ser, this);
+				}
+			}
+		}
+		else {
+			d.limpaLinhaProntoAvisos();
+			cout << "Seres estao em modo pacifico" << endl;
+		}
+	}
+}
+
+void Mapa::actuamEdificios()
+{
+	vector <Edificios*> *edificios = coloniaActual->getEdificios();
+	int n = edificios->size();
+	if (edificios == NULL) {
+		return;
+	}
+	else {
+		if (coloniaActual->getFlagAge() == 1) {
+			for (auto edificios : *edificios) {
+					edificios->efeito(coloniaActual, this);
 			}
 		}
 	}
-	else {
-		d.limpaLinhaProntoAvisos();
-		cout << "Seres estao em modo pacifico" << endl;
-	}	
 }
 
 int Mapa::randomSelector(int valInicial, int valFinal)

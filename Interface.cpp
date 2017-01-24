@@ -163,7 +163,11 @@ bool Interface::verificaComandoInicioJogo()
 	if (comObj.getArg1() == "SETMOEDAS"){
 		mapa->setMoedasaUmaColonia(comObj.getArg2(), atoi(comObj.getArg3().c_str()));
 		return false;
-	}else
+	}
+	else if (comObj.getArg1() == "MKBUILD") {
+
+	}
+	else
 	if (comObj.getArg1() == "LIST") {
 		mapa->mostraColonia(comObj.getArg2());
 		d.limpaLinhaProntoAvisos();
@@ -201,18 +205,30 @@ bool Interface::verificaComandoInicioJogo()
 		return false;
 	}else
 	if (comObj.getArg1() == "NEXT") {
-		mapa->controlaCicloColonias(1);
+		flag =mapa->controlaCicloColonias(1);
 		d.limpaLinhaProntoAvisos();
 		cout << "Proximo Turno";
+		if (flag == true) {
+			return true;
+		}
 		return false;
 	}else
 	if (comObj.getArg1() == "NEXTN") {
 		int turnos = atoi(comObj.getArg2().c_str());
-		mapa->controlaCicloColonias(turnos);
+		flag = mapa->controlaCicloColonias(turnos);
 		d.limpaLinhaProntoAvisos();
 		cout << "Proximos " << turnos << " Turnos";
+		if (flag == true) {
+			return true;
+		}
 		return false;
-	}else {
+	}else
+		if (comObj.getArg1() == "FIM") {
+			d.limpaLinhaProntoAvisos();
+			cout << "O jogador forcou a saida" << endl;
+			return true;
+		}
+	else {
 		d.limpaLinhaProntoAvisos();
 		cout << "Comando invalido" << endl;
 		return false;

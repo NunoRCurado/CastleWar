@@ -71,12 +71,14 @@ public:
 
 	void vendeEdificio(int id);
 
-	void controlaCicloColonias(int turnos);
+	bool controlaCicloColonias(int turnos);
 	void ComandosDoPC();
 	void upgradeEdificio(int id);
 	void verificaMortos();
 
 	void actuamSeres();
+	void actuamEdificios();
+
 	int randomSelector(int valInicial, int valFinal);
 
 	void removeSeresDaColonia(Colonia * colonia, Seres * ser);

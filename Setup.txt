@@ -1,32 +1,35 @@
-Dim 20 40
+Dim 30 50
 Moedas 150
 Oponentes 3
 Next
 Mkperfil a
-addperfil a ecologico
+addperfil a agressao
 addperfil a bandeira
 addperfil a walker
-addperfil a agressao
+addperfil a faca
 Mkperfil b
+addperfil b agressao
 addperfil b espada
 addperfil b bandeira
 addperfil b walker
-addperfil b agressao
 addperfil b faca
 Mkperfil c
+addperfil 
+addperfil c agressao
 addperfil c bandeira
 addperfil c walker
-addperfil c agressao
 addperfil c armadura
+addperfil c faca
 Mkperfil d
 addperfil d bandeira
-addperfil d walker
 addperfil d agressao
+addperfil d walker
 addperfil d superior
+addperfil d faca
 Mkperfil e
+addperfil e agressao
 addperfil e bandeira
 addperfil e walker
-addperfil e agressao
 addperfil e superior
 addperfil e faca
 Inicio

@@ -2,12 +2,13 @@
 
 
 
-Comando::Comando(string arg1, string arg2, string arg3, string arg4)
+Comando::Comando(string arg1, string arg2, string arg3, string arg4, string arg5)
 {
 	this->arg1 = arg1;
 	this->arg2 = arg2;
 	this->arg3 = arg3;
 	this->arg4 = arg4;
+	this->arg5 = arg5;
 
 }
 Comando::Comando()
@@ -32,6 +33,10 @@ string Comando::getArg4()
 {
 	return this->arg4;
 }
+string Comando::getArg5()
+{
+	return this->arg5;
+}
 
 
 void Comando::setArg1(string sub)
@@ -52,6 +57,11 @@ void Comando::setArg3(string sub)
 void Comando::setArg4(string sub)
 {
 	this->arg4 = sub;
+}
+
+void Comando::setArg5(string sub)
+{
+	this->arg5 = sub;
 }
 
 
@@ -90,6 +100,8 @@ Comando Comando::separaComando(string & comando,Comando comandos)
 	comandos.setArg3("0");
 
 	comandos.setArg4("0");
+
+	comandos.setArg5("0");
 	do
 	{
 		string sub;
@@ -103,6 +115,8 @@ Comando Comando::separaComando(string & comando,Comando comandos)
 			comandos.setArg3(sub);
 		else if (i == 3)
 			comandos.setArg4(sub);
+		else if (i == 4)
+			comandos.setArg5(sub);
 
 		i++;
 	} while (iss);

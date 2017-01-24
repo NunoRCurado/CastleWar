@@ -211,7 +211,11 @@ void Jogo::InicioJogo()
 			comObj = comObj.separaComando(comando, comObj);
 			itf->setComando(comObj);
 			flag = itf->verificaComandoInicioJogo();
-		} while (controlo != 6);
+			if (flag == true) {
+				d.limpaLinhaProntoAvisos();
+				cout << "Fim do jogo" << endl;
+			}
+		} while (flag != true);
 	}
 		
 	
