@@ -29,6 +29,8 @@ public:
 	Jogo();
 	~Jogo();
 
+	void JogoFicheiro(string file);
+
 	void ConfiguraJogoFicheiro();
 
 	bool Menu();

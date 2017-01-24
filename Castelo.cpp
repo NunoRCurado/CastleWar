@@ -1,4 +1,5 @@
 #include "Castelo.h"
+#include "Desenho.h"
 
 
 
@@ -22,7 +23,9 @@ void Castelo::colocaSeres(Seres * ser)
 
 void Castelo::repara(Colonia * colonia, int id)
 {
+	Desenho d;
 	if (this->getSaude() <= 0) { 
+		d.limpaLinhaProntoAvisos();
 		cout << "Edificio impossivel de reparar devido a ter sustido danos irreversiveis";
 	}
 	else {
@@ -32,10 +35,12 @@ void Castelo::repara(Colonia * colonia, int id)
 				setSaude(50);
 			}
 			else {
+				d.limpaLinhaProntoAvisos();
 				cout << "Nao ha dinheiro para reparar o Castelo";
 			}
 		}
 		else {
+			d.limpaLinhaProntoAvisos();
 			cout << "Edificio nao danificado";
 		}
 	}

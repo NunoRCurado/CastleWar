@@ -622,6 +622,28 @@ bool Mapa::verificaProximidadeAoProprioCasteloQuinta(int linhas, int colunas, Co
 	return false;
 }
 
+void Mapa::reparaEdificio(int id)
+{
+	Desenho d;
+	vector <Edificios*> *edificios = coloniaActual->getEdificios();
+	
+	for (auto edificio : *edificios) {
+		if (edificio->getId() == "T") {
+			edificio->getTerreno()->getEdificios()->repara(coloniaActual, id);
+			return;
+		}
+		if (edificio->getId() == "Q") {
+			edificio->getTerreno()->getEdificios()->repara(coloniaActual, id);
+			return;
+		}
+		if (edificio->getId() == "C") {
+			edificio->getTerreno()->getEdificios()->repara(coloniaActual, id);
+			return;
+		}
+	}
+}
+
+
 void Mapa::vendeEdificio(int id)
 {
 	Desenho d;
@@ -649,6 +671,7 @@ void Mapa::vendeEdificio(int id)
 
 void Mapa::upgradeEdificio(int id)
 {
+	Desenho d;
 	vector <Edificios*> *edificios = coloniaActual->getEdificios();
 
 	for (auto edificio : *edificios) {

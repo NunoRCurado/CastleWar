@@ -3,6 +3,7 @@
 #include "Colonia.h"
 #include "Edificios.h"
 #include "Mapa.h"
+#include "Desenho.h"
 
 Quinta::Quinta()
 {
@@ -24,45 +25,40 @@ void Quinta::efeito(Colonia * coloniaActual, Mapa *mapa)
 
 void Quinta::upgrade(Colonia * colonia, int id)
 {
+	Desenho d;
 	if (colonia->getMoedas() >= 10) {
 		this->setDefesa(this->getDefesa() + 1);
 		this->setNumeroUpgrades(this->getNumeroUpgrades() + 1);
 		colonia->setMoedas(colonia->getMoedas() - 10);
-		
+		d.limpaLinhaProntoAvisos();
+		cout << "Upgrade efectuado";
 	}
 	else {
+		d.limpaLinhaProntoAvisos();
 		cout << "Nao ha dinheiro para fazer upgrade a esta quinta";
 	}
 }
 
 void Quinta::vende(Colonia * colonia, int id)
 {
-	Edificios *edifico;
 	vector <Edificios*>  *vEdificio = colonia->getEdificios();
 	vector <Edificios*>::iterator it;
-	int tamanho = vEdificio->size();
 
 	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5)));
-	int j = 0;
-	for (int i = 0; i < vEdificio->size(); i++) { //percorre os edificios todos
-		if (vEdificio->at(i)->getEdificioID() == id) { // verifica se o edificio nesta posicao é igual ao recebido
-			edifico = vEdificio->at(i);  // edificio auxiliar
-			for (it = vEdificio->begin(); it != vEdificio->end(); it++) { //percorre o vector vEdificios
-				if (edifico->getEdificioID() == vEdificio->at(j)->getEdificioID()) { //corre o vEdificio todo e encontra um igual
-					it = vEdificio->erase(it); //apaga quando encontrar
-				}
-				if (it == vEdificio->end()) {
-					return;
-				}
-				j++;
-			}
-		}
+	
+	for (it = vEdificio->begin(); it != vEdificio->end(); it++) {
+		if((*it)->getEdificioID() == id)
+			it = vEdificio->erase(it);
+		if (it == vEdificio->end())
+			return;
 	}
 }
 
 void Quinta::repara(Colonia * colonia, int id)
 {
+	Desenho d;
 	if (this->getSaude() <= 0) {
+		d.limpaLinhaProntoAvisos();
 		cout << "Edificio impossivel de reparar devido a ter sustido danos irreversiveis";
 	}
 	else {
@@ -72,10 +68,12 @@ void Quinta::repara(Colonia * colonia, int id)
 				setSaude(20);
 			}
 			else {
+				d.limpaLinhaProntoAvisos();
 				cout << "Nao ha dinheiro para reparar esta quinta";
 			}
 		}
 		else {
+			d.limpaLinhaProntoAvisos();
 			cout << "Edificio nao danificado";
 		}
 	}

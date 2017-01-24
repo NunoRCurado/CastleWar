@@ -1,6 +1,7 @@
 #include "Torre.h"
 #include "Terreno.h"
 #include "Mapa.h"
+#include "Desenho.h"
 
 Torre::Torre()
 {
@@ -17,9 +18,6 @@ Torre::~Torre()
 
 void Torre::efeito(Colonia *colonia,Mapa *mapa)
 {
-	//tem q ir verificar se ha seres inimigos a volta, utilizar vector de vizinhos?
-	// se houver da o dano
-
 	Terreno* terreno = this->getTerreno();
 	vector<Terreno*> *adj = terreno->getTerrenoAdjacentes();
 	int n = adj->size();
@@ -35,13 +33,18 @@ void Torre::efeito(Colonia *colonia,Mapa *mapa)
 
 void Torre::upgrade(Colonia *colonia, int id)
 {
+	Desenho d;
+
 	if (colonia->getMoedas() >= 10) {
 		this->setDefesa(this->getDefesa() + 2);
 		this->setAtaque(this->getAtaque() + 1);
 		colonia->setMoedas(colonia->getMoedas() - 10);
-		this->setNumeroUpgrades(this->getNumeroUpgrades() + 1);
+		this->setNumeroUpgrades(this->getNumeroUpgrades() + 1);	
+		d.limpaLinhaProntoAvisos();
+		cout << "Upgrade efectuado";
 	}
 	else {
+		d.limpaLinhaProntoAvisos();
 		cout << "Nao ha dinheiro para fazer upgrade a esta torre";
 	}
 	
@@ -49,33 +52,24 @@ void Torre::upgrade(Colonia *colonia, int id)
 
 void Torre::vende(Colonia * colonia, int id)
 {
-	Edificios *edifico;
 	vector <Edificios*>  *vEdificio = colonia->getEdificios();
 	vector <Edificios*>::iterator it;
-	int tamanho = vEdificio->size();
 
 	colonia->setMoedas(colonia->getMoedas() + ((getCusto()) / 2 + (getNumeroUpgrades() * 5)));
-	int j = 0;
-	for (int i = 0; i < vEdificio->size(); i++) {
-		if (vEdificio->at(i)->getEdificioID() == id) {
-			edifico = vEdificio->at(i);
-			for (it = vEdificio->begin(); it != vEdificio->end(); it++) {
-				if (edifico->getEdificioID() == vEdificio->at(j)->getEdificioID()) {
-					it = vEdificio->erase(it);
-				}
-				if (it == vEdificio->end()) {
-					return;
-				}
-				j++;
-			}
-		}	
+	
+	for (it = vEdificio->begin(); it != vEdificio->end(); it++) {
+		if ((*it)->getEdificioID() == id)
+			it = vEdificio->erase(it);
+		if (it == vEdificio->end())
+			return;
 	}
 }
 
 void Torre::repara(Colonia * colonia, int id)
 {
-	
+	Desenho d;
 	if (this->getSaude() <= 0) {
+		d.limpaLinhaProntoAvisos();
 		cout << "Edificio impossivel de reparar devido a ter sustido danos irreversiveis";
 	}
 	else {
@@ -85,10 +79,12 @@ void Torre::repara(Colonia * colonia, int id)
 				setSaude(20);
 			}
 			else {
+				d.limpaLinhaProntoAvisos();
 				cout << "Nao ha dinheiro para reparar esta torre";
 			}
 		}
 		else {
+			d.limpaLinhaProntoAvisos();
 			cout << "Edificio nao danificado";
 		}
 	}
